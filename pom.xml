@@ -36,7 +36,7 @@
 	<properties>
 		<!-- Encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.6</jdk.version>
+		<jdk.version>1.8</jdk.version>
 		
 		<spring.version>3.2.8.RELEASE</spring.version>
 		<hibernate.version>4.2.11.Final</hibernate.version>
@@ -52,6 +52,8 @@
 		<servlet.version>2.5</servlet.version>
 		<log4j.version>1.2.17</log4j.version>
 		<junit.version>4.11</junit.version>
+		<mockito.version>1.9.5</mockito.version>
+		<h2.version>1.4.196</h2.version>
 		
 		<poi.version>3.10-FINAL</poi.version>
 		<jfreechart.version>1.0.17</jfreechart.version>
@@ -143,6 +145,27 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- spring-test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- H2 in-memory DB for DAO integration tests -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- hibernate4 -->
@@ -253,8 +276,14 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED</argLine>
 				</configuration>
 			</plugin>
 		</plugins>
