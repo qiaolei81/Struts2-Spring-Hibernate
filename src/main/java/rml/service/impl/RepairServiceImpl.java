@@ -826,7 +826,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc.setCname("Multicore Digital Signal Processor");
 		doc.setCproducer("Texas Instruments");
 		doc.setCno(Integer.valueOf(10));
-		doc.setCmanual("<a href='upload/tms320c6678.pdf'>tms320c6678.pdf</a>");
+		doc.setCmanual("tms320c6678.pdf");
 		docDao.saveOrUpdate(doc);
 		
 		Tdoc doc1 = new Tdoc();
@@ -835,7 +835,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc1.setCname("Multicore Digital Signal Processor");
 		doc1.setCproducer("Texas Instruments");
 		doc1.setCno(Integer.valueOf(10));
-		doc1.setCmanual("<a href='upload/tms320c6474.pdf'>tms320c6474.pdf</a>");
+		doc1.setCmanual("tms320c6474.pdf");
 		docDao.saveOrUpdate(doc1);
 	
 		Tdoc doc2 = new Tdoc();
@@ -844,7 +844,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc2.setCname("Fixed-Point Digital Signal Processors");
 		doc2.setCproducer("Texas Instruments");
 		doc2.setCno(Integer.valueOf(10));
-		doc2.setCmanual("<a href='upload/tms320vc5510a.pdf'>tms320vc5510a.pdf</a>");
+		doc2.setCmanual("tms320vc5510a.pdf");
 		docDao.saveOrUpdate(doc2);
 		
 		Tdoc doc3 = new Tdoc();
@@ -853,7 +853,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc3.setCname("Digital Media Processor");
 		doc3.setCproducer("Texas Instruments");
 		doc3.setCno(Integer.valueOf(10));
-		doc3.setCmanual("<a href='upload/tms320dm648.pdf'>tms320dm648.pdf</a>");
+		doc3.setCmanual("tms320dm648.pdf");
 		docDao.saveOrUpdate(doc3);
 		
 		Tdoc doc4 = new Tdoc();
@@ -862,7 +862,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc4.setCname("High Speed, Dual Operational Amplifier");
 		doc4.setCproducer("Texas Instruments");
 		doc4.setCno(Integer.valueOf(10));
-		doc4.setCmanual("<a href='upload/lm7372.pdf'>lm7372.pdf</a>");
+		doc4.setCmanual("lm7372.pdf");
 		docDao.saveOrUpdate(doc4);
 		
 		Tdoc doc5 = new Tdoc();
@@ -871,7 +871,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc5.setCname("Low-Voltage Operational Amplifier");
 		doc5.setCproducer("Texas Instruments");
 		doc5.setCno(Integer.valueOf(10));
-		doc5.setCmanual("<a href='upload/tlc1079.pdf'>tlc1079.pdf</a>");
+		doc5.setCmanual("tlc1079.pdf");
 		docDao.saveOrUpdate(doc5);
 		
 		Tdoc doc6 = new Tdoc();
@@ -880,7 +880,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc6.setCname("Dual/quad power amplifier");
 		doc6.setCproducer("STMIcroelectronics");
 		doc6.setCno(Integer.valueOf(10));
-		doc6.setCmanual("<a href='upload/STA540.pdf'>STA540.pdf</a>");
+		doc6.setCmanual("STA540.pdf");
 		docDao.saveOrUpdate(doc6);
 		
 		Tdoc doc7 = new Tdoc();
@@ -889,7 +889,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc7.setCname("Dual BTL class-D audio amplifier");
 		doc7.setCproducer("STMIcroelectronics");
 		doc7.setCno(Integer.valueOf(10));
-		doc7.setCmanual("<a href='upload/TDA7491P.pdf'>TDA7491P.pdf</a>");
+		doc7.setCmanual("TDA7491P.pdf");
 		docDao.saveOrUpdate(doc7);
 		
 		Tdoc doc8 = new Tdoc();
@@ -898,7 +898,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc8.setCname("32-bit Power Architecture MCU");
 		doc8.setCproducer("STMIcroelectronics");
 		doc8.setCno(Integer.valueOf(10));
-		doc8.setCmanual("<a href='upload/SPC560B40L3.pdf'>SPC560B40L3.pdf</a>");
+		doc8.setCmanual("SPC560B40L3.pdf");
 		docDao.saveOrUpdate(doc8);
 		
 		Tdoc doc9 = new Tdoc();
@@ -907,7 +907,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc9.setCname("32-bit Power Architecture MCU");
 		doc9.setCproducer("STMIcroelectronics");
 		doc9.setCno(Integer.valueOf(10));
-		doc9.setCmanual("<a href='upload/SPC564B74L8.pdf'>SPC564B74L8.pdf</a>");
+		doc9.setCmanual("SPC564B74L8.pdf");
 		docDao.saveOrUpdate(doc9);
 		
 		Tdoc doc10 = new Tdoc();
@@ -916,7 +916,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc10.setCname("16Bit MCU");
 		doc10.setCproducer("STMIcroelectronics");
 		doc10.setCno(Integer.valueOf(10));
-		doc10.setCmanual("<a href='upload/ST10F269.pdf'>ST10F269.pdf</a>");
+		doc10.setCmanual("ST10F269.pdf");
 		docDao.saveOrUpdate(doc10);
 		
 		Tdoc doc11 = new Tdoc();
@@ -925,7 +925,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc11.setCname("8-Bit Flash Microcontroller");
 		doc11.setCproducer("Microchip");
 		doc11.setCno(Integer.valueOf(10));
-		doc11.setCmanual("<a href='upload/PIC10F200.pdf'>PIC10F200.pdf</a>");
+		doc11.setCmanual("PIC10F200.pdf");
 		docDao.saveOrUpdate(doc11);
 		
 		Tdoc doc12 = new Tdoc();
@@ -934,7 +934,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc12.setCname("Two Channel Analog Front End");
 		doc12.setCproducer("Microchip");
 		doc12.setCno(Integer.valueOf(10));
-		doc12.setCmanual("<a href='upload/MCP3901.pdf'>MCP3901.pdf</a>");
+		doc12.setCmanual("MCP3901.pdf");
 		docDao.saveOrUpdate(doc12);
 		
 		Tdoc doc13 = new Tdoc();
@@ -943,7 +943,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc13.setCname("Two channel A/D converter");
 		doc13.setCproducer("Microchip");
 		doc13.setCno(Integer.valueOf(10));
-		doc13.setCmanual("<a href='upload/MCP3423.pdf'>MCP3423.pdf</a>");
+		doc13.setCmanual("MCP3423.pdf");
 		docDao.saveOrUpdate(doc13);
 		
 		Tdoc doc14 = new Tdoc();
@@ -952,7 +952,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc14.setCname("6 CMOS Multi-Purpose Flash");
 		doc14.setCproducer("Microchip");
 		doc14.setCno(Integer.valueOf(10));
-		doc14.setCmanual("<a href='upload/SST39VF401C.pdf'>SST39VF401C.pdf</a>");
+		doc14.setCmanual("SST39VF401C.pdf");
 		docDao.saveOrUpdate(doc14);	
 		
 		Tdoc doc15 = new Tdoc();
@@ -961,7 +961,7 @@ public class RepairServiceImpl implements RepairServiceI {
 		doc15.setCname("Instrumentation Amplifier");
 		doc15.setCproducer("Microchip");
 		doc15.setCno(Integer.valueOf(10));
-		doc15.setCmanual("<a href='upload/MCP6N11.pdf'>MCP6N11.pdf</a>");
+		doc15.setCmanual("MCP6N11.pdf");
 		docDao.saveOrUpdate(doc15);
 	}
 	

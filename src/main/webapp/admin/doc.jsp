@@ -56,7 +56,13 @@
 				title : 'Manual',
 				field : 'cmanual',
 				sortable : true,
-				width : 200
+				width : 200,
+				formatter : function(value) {
+					if (value) {
+						return "<a href='upload/" + value + "' target='_blank'>" + value + "</a>";
+					}
+					return '';
+				}
 			} ] ],
 			toolbar : [ {
 				text : 'Add',
