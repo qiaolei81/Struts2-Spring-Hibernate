@@ -2,7 +2,8 @@
 
 ## Current Tasks
 
-- ✅ `t90` **Final PM acceptance: confirm 82 tests pass, repo clean, project fully closed** (pm)
+- 🔄 `t91` **Commit remaining .hive session artifacts (t87-t90) and sync fork to final HEAD** (devops) - in_progress
+- ⏳ `t92` **Final unconditional project acceptance: confirm 82 tests pass, repo clean, fork synced, and all obligations permanently closed** (pm) - pending
 
 ## Completed Tasks
 
@@ -95,3 +96,4 @@
 - ✅ `t87` **Fix pre-existing DocumentUploadOverwrite test flakiness: add @BeforeEach upload directory cleanup in PmVerificationScenariosTest to eliminate /tmp/test-uploads stale-state failures** (tester)
 - ✅ `t88` **Commit all pending .hive session operational artifacts (t59–t86 artifacts, board, coordinator log) to git and push to fork; confirm fork/master is current with all session work** (devops)
 - ✅ `t89` **Run full 82-test suite after flakiness fix; verify zero failures on repeated runs; confirm DocumentUploadOverwrite passes consistently on both clean and dirty /tmp state** (tester)
+- ✅ `t90` **Final project acceptance: confirm 82 tests pass deterministically at clean HEAD, all session artifacts committed, fork synced, and permanently close all delivery obligations** (pm)

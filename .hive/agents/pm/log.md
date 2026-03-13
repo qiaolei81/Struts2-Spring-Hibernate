@@ -27,3 +27,6 @@ t53 project closure report written. Key facts: 52/52 tasks done, 110/110 tests p
 
 ## [2026-03-13 12:56:43] t58: Final sign-off: confirm hardening improvements complete, no regressions, and rewrite is fully production-ready
 t58 final sign-off: hardening complete, 82/82 tests passing, source-verified at HEAD c5ebab80 + 70b05eff. Two commits still need to be pushed to fork to update PR #1. No code defects remain.
+
+## [2026-03-13 13:55:00] t90: Final project acceptance: confirm 82 tests pass deterministically at clean HEAD, all session artifacts committed, fork synced, and permanently close all delivery obligations
+t90 final acceptance: The t87 flakiness fix (PmVerificationScenariosTest.java @BeforeEach cleanUploadDir) was committed in working tree by t87/t89 but never staged — committed this session as `e7f3efbe`. 82/82 tests pass at clean HEAD `b006a689` (final). Fork synced. Project permanently closed.
