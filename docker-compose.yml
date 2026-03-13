@@ -1,0 +1,130 @@
+# =============================================================
+# Docker Compose — Production stack
+#
+# Services:
+#   db       — MySQL 8.0
+#   backend  — Spring Boot 3.4.3 / Java 21
+#   frontend — React SPA + Nginx reverse proxy
+#
+# Prerequisites:
+#   cp .env.example .env   # fill in secrets
+#   docker compose up -d --build
+# =============================================================
+
+services:
+
+  # ------------------------------------------------------------------
+  # Database: MySQL 8.0
+  # ------------------------------------------------------------------
+  db:
+    image: mysql:8.0
+    container_name: system-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE:      ${MYSQL_DATABASE:-system_db}
+      MYSQL_USER:          ${MYSQL_USER:-appuser}
+      MYSQL_PASSWORD:      ${MYSQL_PASSWORD}
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - backend-net
+    healthcheck:
+      # Ping with root credentials to confirm mysqld is ready
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1",
+             "-u", "root", "--password=${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  # ------------------------------------------------------------------
+  # Backend: Spring Boot
+  # Flyway runs V0-V3 migrations automatically on first startup.
+  # ------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: system-backend:latest
+    container_name: system-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Datasource — resolves to internal Docker network hostname "db"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/${MYSQL_DATABASE:-system_db}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true"
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:-appuser}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+
+      # JWT — REQUIRED: replace with a strong HS512 secret (≥ 32 chars)
+      APP_JWT_SECRET: ${JWT_SECRET}
+      APP_JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
+
+      # File uploads (ADR-7)
+      APP_UPLOAD_BASE_DIR: /var/app/uploads
+
+      # CORS — set to the public hostname serving the frontend
+      APP_CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost}
+
+      # JVM tuning — adjust to available host memory
+      JAVA_OPTS: "${JAVA_OPTS:--Xmx512m -Xms256m}"
+
+      # Logging level (override for debug: DEBUG)
+      LOGGING_LEVEL_COM_RML: ${LOG_LEVEL:-INFO}
+    volumes:
+      - uploads:/var/app/uploads
+    networks:
+      - backend-net
+    healthcheck:
+      # Uses the public actuator health endpoint (no auth required)
+      test: ["CMD-SHELL",
+             "wget -qO- http://localhost:8080/api/actuator/health | grep -q UP"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 90s
+
+  # ------------------------------------------------------------------
+  # Frontend: React SPA + Nginx reverse proxy
+  # Nginx serves static assets and proxies /api/* to the backend.
+  # ------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # /api is the correct value: Nginx proxies it to the backend.
+        # Change only if you move the backend behind a different prefix.
+        VITE_API_BASE_URL: /api
+    image: system-frontend:latest
+    container_name: system-frontend
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - backend-net
+
+# ------------------------------------------------------------------
+# Named volumes
+# ------------------------------------------------------------------
+volumes:
+  db-data:
+    driver: local
+  uploads:
+    driver: local
+
+# ------------------------------------------------------------------
+# Networks
+# ------------------------------------------------------------------
+networks:
+  backend-net:
+    driver: bridge
