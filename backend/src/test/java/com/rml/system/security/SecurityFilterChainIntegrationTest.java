@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the Security filter chain configuration.
  *
  * Proves:
- *  - Public endpoints (login, register, actuator/health) are accessible without JWT.
+ *  - Public endpoints (login, register, actuator/health, /health) are accessible without JWT.
  *  - All other protected endpoints return 401 (Unauthorized) without a token.
  *  - A tampered / invalid JWT Bearer token yields 401, not 500.
  *  - The 401 response body conforms to the application JSON error format.
@@ -66,13 +66,11 @@ class SecurityFilterChainIntegrationTest {
                 .andExpect(status().isOk());
     }
 
-    // ── Protected endpoints require auth ─────────────────────────────────────
-
     @Test
-    @DisplayName("GET /health (custom) without JWT returns 401")
-    void customHealth_noJwt_returns401() throws Exception {
+    @DisplayName("GET /health (custom) is publicly accessible without JWT")
+    void customHealth_noJwt_returnsOk() throws Exception {
         mockMvc.perform(get("/health"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -110,12 +108,12 @@ class SecurityFilterChainIntegrationTest {
                 .andExpect(status().isUnauthorized());
     }
 
-    // ── Invalid JWT is rejected ───────────────────────────────────────────────
+    // ── Invalid JWT is rejected on protected endpoints ────────────────────────
 
     @Test
     @DisplayName("Request with invalid Bearer token returns 401")
     void invalidBearerToken_returns401() throws Exception {
-        mockMvc.perform(get("/health")
+        mockMvc.perform(get("/users")
                         .header("Authorization", "Bearer this.is.not.a.valid.jwt"))
                 .andExpect(status().isUnauthorized());
     }
@@ -123,7 +121,7 @@ class SecurityFilterChainIntegrationTest {
     @Test
     @DisplayName("Request with malformed Authorization header returns 401")
     void malformedAuthHeader_returns401() throws Exception {
-        mockMvc.perform(get("/health")
+        mockMvc.perform(get("/users")
                         .header("Authorization", "NotBearer somevalue"))
                 .andExpect(status().isUnauthorized());
     }

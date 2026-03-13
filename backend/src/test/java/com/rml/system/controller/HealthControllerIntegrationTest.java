@@ -16,8 +16,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for HealthController.
  *
  * Proves:
- *  - The /health endpoint exists and returns UP when authenticated.
- *  - Unauthenticated access to /health is correctly rejected with 401.
+ *  - The /health endpoint exists, is publicly accessible (no JWT required), and returns UP.
+ *  - Authenticated access also works correctly.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
@@ -29,10 +29,13 @@ class HealthControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("GET /health without authentication returns 401")
-    void health_unauthenticated_returns401() throws Exception {
+    @DisplayName("GET /health without authentication returns 200 (public endpoint)")
+    void health_unauthenticated_returnsOk() throws Exception {
         mockMvc.perform(get("/health"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.status").value("UP"))
+                .andExpect(jsonPath("$.data.timestamp").exists());
     }
 
     @Test

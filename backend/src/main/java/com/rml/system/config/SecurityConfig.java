@@ -73,8 +73,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
-                // Actuator health is public
+                // Health endpoints are public (no JWT required for liveness/readiness probes)
                 .requestMatchers("/actuator/health", "/actuator/info").permitAll()
+                .requestMatchers(HttpMethod.GET, "/health").permitAll()
                 // Everything else requires authentication;
                 // fine-grained RBAC is enforced by @PreAuthorize on service methods (ADR-3)
                 .anyRequest().authenticated()
