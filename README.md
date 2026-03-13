@@ -34,7 +34,7 @@ cp .env.example .env
 docker compose up -d --build
 
 # 4. Open in browser
-open http://localhost          # default credentials: admin / admin123
+open http://localhost          # default credentials: admin / admin
 ```
 
 The stack starts three containers: `system-db` → `system-backend` → `system-frontend`.
