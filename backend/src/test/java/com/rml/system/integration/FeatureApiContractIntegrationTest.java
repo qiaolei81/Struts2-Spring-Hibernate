@@ -104,14 +104,28 @@ class FeatureApiContractIntegrationTest {
         }
 
         @Test
-        @DisplayName("GET /users?name=admin filters by name (MISMATCH-1 fixed)")
+        @DisplayName("GET /users?name=admin returns only matching users — ?name= binding is live (t27 fix)")
         void getUsers_filteredByName_returns200() throws Exception {
             mockMvc.perform(get("/users")
                             .param("page", "0")
                             .param("size", "10")
                             .param("name", "admin"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.data.content").isArray());
+                    .andExpect(jsonPath("$.data.content").isArray())
+                    .andExpect(jsonPath("$.data.content").isNotEmpty())
+                    .andExpect(jsonPath("$.data.content[0].username").value("admin"));
+        }
+
+        @Test
+        @DisplayName("GET /users?name=zzz-no-match returns empty — filter has no false positives")
+        void getUsers_filteredByName_noMatch_returnsEmpty() throws Exception {
+            mockMvc.perform(get("/users")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("name", "zzz-no-match"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.content").isArray())
+                    .andExpect(jsonPath("$.data.content").isEmpty());
         }
 
         @Test
@@ -162,14 +176,28 @@ class FeatureApiContractIntegrationTest {
         }
 
         @Test
-        @DisplayName("GET /roles?name=ADMIN filters by name (MISMATCH-1 fixed)")
+        @DisplayName("GET /roles?name=ADMIN returns only ADMIN role — ?name= binding is live (t27 fix)")
         void getRoles_filteredByName_returns200() throws Exception {
             mockMvc.perform(get("/roles")
                             .param("page", "0")
                             .param("size", "10")
                             .param("name", "ADMIN"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.data.content").isArray());
+                    .andExpect(jsonPath("$.data.content").isArray())
+                    .andExpect(jsonPath("$.data.content").isNotEmpty())
+                    .andExpect(jsonPath("$.data.content[0].name").value("ADMIN"));
+        }
+
+        @Test
+        @DisplayName("GET /roles?name=zzz-no-match returns empty — filter has no false positives")
+        void getRoles_filteredByName_noMatch_returnsEmpty() throws Exception {
+            mockMvc.perform(get("/roles")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("name", "zzz-no-match"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.content").isArray())
+                    .andExpect(jsonPath("$.data.content").isEmpty());
         }
 
         @Test
@@ -250,14 +278,27 @@ class FeatureApiContractIntegrationTest {
         }
 
         @Test
-        @DisplayName("GET /equipment?name=Server filters by name (MISMATCH-1 fixed)")
+        @DisplayName("GET /equipment?name=Alpha returns seeded Alpha record — ?name= binding is live (t27 fix)")
         void getEquipment_filteredByName_returns200() throws Exception {
             mockMvc.perform(get("/equipment")
                             .param("page", "0")
                             .param("size", "10")
-                            .param("name", "Server"))
+                            .param("name", "Alpha"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.data.content").isArray());
+                    .andExpect(jsonPath("$.data.content").isArray())
+                    .andExpect(jsonPath("$.data.content").isNotEmpty());
+        }
+
+        @Test
+        @DisplayName("GET /equipment?name=zzz-no-match returns empty — filter has no false positives")
+        void getEquipment_filteredByName_noMatch_returnsEmpty() throws Exception {
+            mockMvc.perform(get("/equipment")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("name", "zzz-no-match"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.content").isArray())
+                    .andExpect(jsonPath("$.data.content").isEmpty());
         }
 
         @Test
@@ -300,14 +341,27 @@ class FeatureApiContractIntegrationTest {
         }
 
         @Test
-        @DisplayName("GET /documents?name=Manual filters by name (MISMATCH-1 fixed)")
+        @DisplayName("GET /documents?name=Alpha returns seeded Alpha record — ?name= binding is live (t27 fix)")
         void getDocuments_filteredByName_returns200() throws Exception {
             mockMvc.perform(get("/documents")
                             .param("page", "0")
                             .param("size", "10")
-                            .param("name", "Manual"))
+                            .param("name", "Alpha"))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.data.content").isArray());
+                    .andExpect(jsonPath("$.data.content").isArray())
+                    .andExpect(jsonPath("$.data.content").isNotEmpty());
+        }
+
+        @Test
+        @DisplayName("GET /documents?name=zzz-no-match returns empty — filter has no false positives")
+        void getDocuments_filteredByName_noMatch_returnsEmpty() throws Exception {
+            mockMvc.perform(get("/documents")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("name", "zzz-no-match"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.content").isArray())
+                    .andExpect(jsonPath("$.data.content").isEmpty());
         }
 
         @Test
