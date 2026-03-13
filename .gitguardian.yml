@@ -1,0 +1,21 @@
+# GitGuardian configuration — suppresses false-positive alerts for test fixtures.
+# See: https://docs.gitguardian.com/ggshield-docs/configuration
+version: 2
+
+secret:
+  # Exclude the entire test source tree and test resources.
+  # These paths contain synthetic fixture credentials (e.g. admin/admin123)
+  # used exclusively by the Spring Boot integration test harness.
+  # None of these values are production secrets or leak real credentials.
+  ignored_paths:
+    - "backend/src/test/**"
+    - "backend/src/test/resources/**"
+
+  # Pin the specific fixture values that triggered the GitGuardian alert on
+  # commit 93174262 (PR #1). Matching by literal value ensures the suppression
+  # is as narrow as possible and does not mask real secrets elsewhere.
+  ignored_matches:
+    - name: "test-fixture-admin-password"
+      match: "admin123"
+    - name: "test-fixture-testuser-password"
+      match: "pass1234"
