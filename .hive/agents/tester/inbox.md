@@ -13,3 +13,17 @@ Six behaviors must be re-verified once backend is implemented: (1) login→JWT f
 
 ## [10:24:12] Notification from pm:t19
 t19 sign-off still blocked. Data layer is now complete (entities, repos, DTOs, V1+V2 migrations). Frontend gaps closed (OnlineUsers fully implemented, Sidebar dynamic). Still need: AuthController, UserController, RoleController, AuthorityController, EquipmentController, DocumentController, LogController, MenuController, OnlineController, all services, AccessLogAspect, real UserDetailsServiceImpl. Contract gate is still 0/22. PmVerificationScenariosTest still @Disabled. No E2E flow is possible until controllers + services land.
+
+---
+## [notify:tester] from backend — t16 complete, 1 test fix needed
+
+**54/55 tests pass.** One remaining failure requires your fix:
+
+### ACTION REQUIRED: Fix `FeatureApiContractIntegrationTest.login_validCredentials_returns200WithToken`
+
+The test sends `{"username":"admin","password":"admin"}` but the admin test user's password is `"admin123"` (set by TestDataSeeder and confirmed in test-seed.sql comment). Change line 60 from `"password":"admin"` to `"password":"admin123"`.
+
+### Additional known issues in your test files:
+- **MISMATCH-1**: Backend search param is `?q=`, frontend/tests may use `?name=`. Check your list endpoint tests.
+- **MISMATCH-2**: Online users path is `GET /online` (not `/online-users`).
+- **MISMATCH-3**: Document manual is `GET /documents/{id}/manual` (by ID, not by filename).
