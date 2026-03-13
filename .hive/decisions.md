@@ -32,3 +32,7 @@ _This file will contain architecture decisions, API contracts, and technical cho
 - **ADR-17 [database]** (11:05:30): ADR-13: `t_role.name` values in seed data **must be UPPERCASE** (e.g. `ADMIN`, `GUEST`, `USER`). `UserDetailsServiceImpl` builds `ROLE_` + `name.toUpperCase()` — so the canonical name in DB and the `hasRole()` argument must agree after uppercasing. Never use mixed-case display names as role identifiers.
 
 - **ADR-18 [devops]** (11:33:20): Production stack uses a single Nginx container as the only host-exposed service (port 80). Backend and DB are internal-only on `backend-net`. Nginx uses `resolver 127.0.0.11` (Docker DNS) for runtime hostname resolution, enabling backend restarts without nginx reload.
+
+- **ADR-19 [architect]** (12:45:02): All architectural invariants and ADR-1 through ADR-18 are documented and cross-referenced in t54-architect.md. This document is the authoritative technical reference for new contributors.
+
+- **ADR-20 [devops]** (12:49:24): ADR-21: Content-Security-Policy is set to `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'`. The `'unsafe-inline'` on `style-src` is required by Ant Design v5 CSS-in-JS and cannot be removed until Ant Design provides nonce-based CSP support.

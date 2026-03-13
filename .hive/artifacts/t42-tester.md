@@ -116,3 +116,26 @@ The `.gitguardian.yml` is well-formed (`version: 2`), committed, and pushed to `
 2. **`application-test.yml` placement** — the file lives in `backend/src/test/resources/` (correct), fully covered by `ignored_paths`. There is no copy in `backend/src/main/resources/`.
 
 3. **PR #1 readiness** — credential externalization is complete, `.gitguardian.yml` suppression is in place, 63/63 tests pass. GitGuardian scanner should clear on next push evaluation.
+
+---
+
+## Amendment — t55 Backend Fixes (commit `c5ebab80`)
+
+**Verified:** 2026-03-13 | **New total: 67/67 PASS**
+
+### 4 New Tests Added
+
+| Class | New Tests | Covers |
+|-------|-----------|--------|
+| `JwtTokenProviderTest` (7→9) | `init_throwsForPlaceholderSecret`, `init_acceptsValidSecret` | `@PostConstruct` startup guard rejects `changeme`-style placeholder secret |
+| `UserServiceTest` (new, 2) | `getRoleStats_returnsAggregatedCounts`, `getRoleStats_returnsNoRoleSentinelWhenEmpty` | Single-query aggregate path; "No Role" sentinel when no assignments |
+
+### Internal Fixes — No Contract Changes
+
+| Fix | Proof |
+|-----|-------|
+| N+1 `getRoleStats` → single `countUsersByRole()` JPQL | `UserServiceTest.getRoleStats_returnsAggregatedCounts` verifies single `userRepository.countUsersByRole()` call |
+| `clearInactiveUsers` → bulk `@Modifying` UPDATE | No dedicated test (scheduling); implementation change only |
+| JWT placeholder secret rejected at startup | `init_throwsForPlaceholderSecret` proves `IllegalStateException` with "placeholder" message |
+
+**API contracts unchanged** — all 63 prior integration tests continue to pass unmodified.

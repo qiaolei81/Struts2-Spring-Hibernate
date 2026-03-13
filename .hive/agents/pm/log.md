@@ -21,3 +21,9 @@ GitGuardian neutral advisory on PR #1 is a confirmed false positive: commit `0b3
 
 ## [2026-03-13 12:25:00] t49: Final upstream merge confirmation and project handover
 t49 final handover: PR #1 on KevinXie0131/Struts2-Spring-Hibernate is open, mergeable_state=clean, no human reviews yet. GitGuardian neutral check is confirmed false positive (test fixture credentials). All 110 tests pass at HEAD 130fe081. Project is fully handed over — no further team action required. Upstream maintainer must merge and rotate secrets before deploying.
+
+## [2026-03-13 12:37:30] t53: Project closure report: delivery summary, post-launch backlog (one-item: MISMATCH-1 resolved), operational handover notes, and known risks for the upstream maintainer
+t53 project closure report written. Key facts: 52/52 tasks done, 110/110 tests passing, MISMATCH-1 (search `?name=` param binding) is the only post-acceptance defect — fully resolved at t27/t28/t29 with 8 dedicated filter tests. Zero open backlog items. PR #1 open on upstream, `mergeable_state: clean`. Main risks for upstream maintainer: no HTTPS, secrets rotation required, file upload volume not durable, BCrypt/MD5 password incompatibility for legacy user migration.
+
+## [2026-03-13 12:56:43] t58: Final sign-off: confirm hardening improvements complete, no regressions, and rewrite is fully production-ready
+t58 final sign-off: hardening complete, 82/82 tests passing, source-verified at HEAD c5ebab80 + 70b05eff. Two commits still need to be pushed to fork to update PR #1. No code defects remain.

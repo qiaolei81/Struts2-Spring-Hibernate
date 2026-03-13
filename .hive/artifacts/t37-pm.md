@@ -108,3 +108,55 @@ The struts2-easyui-system rewrite is complete. The original Struts2 / Spring 3 /
 ### ✅ UNCONDITIONAL MERGE SIGN-OFF GRANTED
 
 PR #1 is fully ready to merge into `KevinXie0131/Struts2-Spring-Hibernate:master`. No outstanding conditions.
+
+---
+
+## t52 Housekeeping Sign-Off
+
+**Fork HEAD after t52:** `27e9880d`
+
+### Verified
+
+| Item | Check |
+|---|---|
+| Fork synced — `fork/master` = local `master` = `27e9880d` | ✅ |
+| README rewritten with Docker Compose quick-start | ✅ |
+| Cold-clone gap resolved — `clone → cp .env.example .env → docker compose up -d --build` documented | ✅ |
+| `.env` in `.gitignore` (line 42) | ✅ |
+| `.env.example` present as canonical secrets reference | ✅ |
+
+### README Coverage Confirmed
+
+- Stack table (Backend / Frontend / Database / Proxy / Build)
+- Quick Start: 4-step clone-to-browser walkthrough
+- Environment variables table (8 vars, required vs optional)
+- Default credentials noted (`admin / admin123`)
+
+### ✅ t52 SIGN-OFF GRANTED — no remaining delivery gaps.
+
+---
+
+## t58 Final Hardening Sign-Off (t55 + t56 + t57)
+
+**Test baseline after hardening:** 67 backend + 15 frontend = **82 tests, 0 failures**  
+*(up from 63 backend pre-t55: 4 new tests covering hardening fixes)*
+
+### Hardening Scope Verified
+
+| Task | Fix | Tests |
+|---|---|---|
+| t55 | `getRoleStats()` N+1 → single aggregate JPQL query | 2 new — `UserServiceTest` ✅ |
+| t55 | `clearInactiveUsers()` bulk UPDATE (`@Modifying`) | Context-load verified ✅ |
+| t55 | JWT placeholder secret → startup `IllegalStateException` guard | 2 new — `JwtTokenProviderTest` ✅ |
+| t56 | Nginx CSP header (Ant Design-compatible `style-src 'unsafe-inline'`) | nginx -t ✅ |
+| t56 | Nginx auth rate limiting — 5 req/min, burst 5, HTTP 429 | nginx -t ✅ |
+
+### Zero Regressions Confirmed
+
+| Suite | Before | After | Delta |
+|---|---|---|---|
+| Backend | 63 | 67 | +4 (all new hardening tests) |
+| Frontend | 15 | 15 | 0 |
+| Nginx config | valid | valid | 0 |
+
+### ✅ t58 FINAL SIGN-OFF GRANTED — hardening complete, zero regressions, project production-ready.

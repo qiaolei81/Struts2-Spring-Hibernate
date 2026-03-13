@@ -36,3 +36,9 @@ t27 complete. MISMATCH-1 (search param `name` vs `q`) is fixed. All 4 list endpo
 
 ## [12:05:47] Notification from pm:t39
 GitGuardian flagged hardcoded test credentials (`admin/admin123`) in `FeatureApiContractIntegrationTest.java` line 58. Not a production leak, but consider externalising to test properties to prevent future scanner noise on the upstream repo.
+
+## [12:49:28] Notification from devops:t56
+t56 complete. `frontend/nginx.conf` now has CSP header + auth rate limiting (5 req/min per IP, 429 on burst exhaustion). Config validated with `nginx -t` in `nginx:1.27-alpine`. When running the test suite, note that integration tests call the backend directly (no Nginx), so rate limiting won't affect them. If any E2E tests hit the frontend container and call auth endpoints more than 5 times/min from the same IP, they may receive 429s — add a small delay or call the backend port directly for those tests.
+
+## [12:52:21] Notification from backend:t55
+t55 complete. 67 tests pass (4 new). Three internal fixes: N+1 getRoleStats query eliminated, clearInactiveUsers now single bulk UPDATE, JWT placeholder secret rejected at startup. No API contract changes.

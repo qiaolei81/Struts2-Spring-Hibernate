@@ -78,6 +78,26 @@ The upstream maintainer (`KevinXie0131`) may merge at their discretion.
 
 ---
 
+## t52 Amendment — README + .env housekeeping (2026-03-13T12:32Z)
+
+t52 devops landed two additional commits after t45 initial sign-off:
+
+| SHA | Message |
+|---|---|
+| `dfc70418` | docs: rewrite README for new stack with Docker Compose quick-start |
+| `27e9880d` | chore: commit hive operational artifacts through t52 final housekeeping |
+
+**Verified:**
+- README rewritten — Docker Compose quick-start, stack table, full env-var reference ✅
+- `.env` listed in `.gitignore` (line 42) — will never be committed ✅
+- Fork HEAD `27e9880d` matches local HEAD and PR #1 head SHA ✅
+- PR updated at `2026-03-13T12:32:10Z` — 22 commits, 222 files, +24,618/−51 ✅
+- PR `mergeable_state: unstable` is the GitGuardian CI advisory (confirmed false positive, already documented in PR body) — **not a merge blocker** ✅
+
+Sign-off remains unconditional. t52 closes the cold-clone documentation gap.
+
+---
+
 ## Project Closure
 
 The struts2-easyui-system rewrite is **complete and fully delivered**.
@@ -91,4 +111,6 @@ The struts2-easyui-system rewrite is **complete and fully delivered**.
 | All artifacts committed | ✅ t35 |
 | Release v1.0.0 published | ✅ t37 |
 | Credential externalization + GitGuardian | ✅ t43/t44 |
-| **PR #1 approved for upstream merge** | ✅ **t45** |
+| PR #1 approved for upstream merge | ✅ t45 |
+| README rewrite + .env gitignore | ✅ t52 |
+| **Project fully closed** | ✅ **t45 (amended)** |

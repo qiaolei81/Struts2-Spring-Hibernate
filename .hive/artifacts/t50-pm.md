@@ -114,3 +114,26 @@ The upstream maintainer holds the merge action. No further deliverable is outsta
 | GitGuardian advisory documented | t47/t48 | ✅ |
 | Final handover | t49 | ✅ |
 | **Upstream merge monitoring** | **t50** | ⏳ Awaiting maintainer |
+| **README + .env housekeeping** | **t52** | ✅ Merged to fork, PR updated |
+
+---
+
+## Addendum — t52 Devops Changes (2026-03-13T12:32Z)
+
+Devops completed t52 after the initial t50 snapshot. The following changes are now in the fork and reflected in PR #1:
+
+| Change | Commit | Detail |
+|---|---|---|
+| README rewritten | `dfc70418` | Struts2-era README replaced with Docker Compose quick-start, env var table, dev setup instructions, stack table |
+| `.env` gitignored | included in push | Prevents accidental commit of real secrets |
+| Hive artifacts committed | `27e9880d` | Operational metadata committed; fork synced |
+
+**PR #1 updated state (12:32Z):**
+- Head SHA: `27e9880d` (2 new commits since t49)
+- Total commits: 22 (was 20)
+- Changed files: 222 (was 204)
+- `mergeable_state`: `unknown` — GitHub recomputing after new push (expected to resolve to `clean`)
+
+**Cold-clone gap resolved.** A developer cloning the fork from scratch now has a README with the exact `clone → cp .env.example .env → docker compose up -d` workflow. This was the only remaining onboarding gap identified at t52.
+
+**PM sign-off on t52 changes: ✅ complete.** README accurately represents the delivered system. No feature scope changes.

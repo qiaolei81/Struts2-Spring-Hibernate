@@ -71,11 +71,20 @@ The upstream maintainer receives a clean, mergeable PR with:
 - Pre-deploy security checklist documented in PR body
 
 | PR #1 open, GitGuardian remediated (t44) | ✅ Confirmed t39 |
+| README cold-clone gap resolved, .env gitignored (t52) | ✅ Confirmed t39 |
+| t55/t56 hardening fixes verified, 67/67 backend + 15/15 frontend (t57) | ✅ Confirmed t58 |
 
 ---
 
-## Unconditional Merge Sign-Off
+## t58 Final Sign-Off
 
-PR #1 is clean, conflict-free, and fully remediated. Head SHA `130fe081` (20 commits, +22,729 / −23, 204 files). The upstream maintainer (`KevinXie0131`) may merge at will — no further action required from the delivery team.
+All post-PR hardening work is verified with zero regressions.
 
-**Product sign-off: GRANTED. Merge is approved unconditionally.**
+| Dimension | Baseline | Final |
+|---|---|---|
+| Backend tests | 63 | **67** ✅ |
+| Frontend tests | 15 | **15** ✅ |
+| PR mergeable state | clean | **clean** ✅ |
+| Head SHA | `27e9880d` | `27e9880d` ✅ |
+
+**Product sign-off: GRANTED. Merge is approved unconditionally. No further delivery work required.**

@@ -18,6 +18,17 @@ Tests run: 55 | Failures: 0 | Errors: 0 | Skipped: 0
 BUILD SUCCESS
 ```
 
+## ✅ t55 Verification: 67/67 — BUILD SUCCESS
+
+Backend internal fixes: N+1 `getRoleStats` query eliminated, `clearInactiveUsers` single
+bulk UPDATE, JWT placeholder secret rejected at startup. No API contract changes.
+4 new tests added. All prior 63 tests still green.
+
+```
+Tests run: 67 | Failures: 0 | Errors: 0 | Skipped: 0
+BUILD SUCCESS
+```
+
 ---
 
 ## Final Test Results (t28 run)
@@ -428,12 +439,34 @@ This prevents 404s from being swallowed as 500s and gives frontend correct HTTP 
 ## Commands to Reproduce
 
 ```bash
-# Backend contract gate (should be 22/22 green when t16 is implemented)
+# Backend (63 tests — 22 contract + 12 PM scenarios + 29 infra)
 cd backend && mvn test -Dspring.profiles.active=test
-
-# PM verification scenarios (remove @Disabled in PmVerificationScenariosTest first)
-cd backend && mvn test -Dspring.profiles.active=test -Dtest=PmVerificationScenariosTest
 
 # Frontend (stable — always green)
 cd frontend && npm test
 ```
+
+---
+
+## Nginx Rate Limit — Test Impact Assessment (t56)
+
+DevOps added auth rate limiting in `frontend/nginx.conf`: `5 req/min per IP`,
+`burst=5 nodelay`, returns HTTP 429. Applies to `/api/auth/(login|register|refresh)`.
+
+**Impact on current test suite: ZERO.**
+
+All 63 backend tests use `@SpringBootTest(webEnvironment = MOCK)` with `MockMvc`.
+MockMvc invokes the Spring `DispatcherServlet` in-process — no socket, no HTTP, no Nginx.
+The rate limiter never sees these requests.
+
+Auth endpoint call counts (informational only):
+| Test file | `auth/login` calls |
+|---|---|
+| `SecurityFilterChainIntegrationTest` | 2 |
+| `FeatureApiContractIntegrationTest` | 4 |
+| `PmVerificationScenariosTest` | 8 |
+
+**Future risk:** If Playwright/Cypress tests are written against the full Docker stack,
+auth tests calling through Nginx could hit the burst limit (>5 rapid calls from one IP).
+Mitigation: call the backend port (8080) directly in those tests, or add a small delay
+between auth calls. The devops team has documented this guidance.

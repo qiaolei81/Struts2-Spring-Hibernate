@@ -12,3 +12,6 @@ At t34 start: all production deployment artifacts (Dockerfiles, .dockerignore, .
 
 ## [2026-03-13 12:04:37] t38: Open pull request from fork to upstream repository with rewrite summary
 PR #1 opened at KevinXie0131/Struts2-Spring-Hibernate from qiaolei81:master. Upstream `origin` is read-only for push but `gh pr create --repo` with `--head qiaolei81:master` works correctly for fork-to-upstream PRs via the active `qiaolei81` gh auth account.
+
+## [2026-03-13 12:49:30] t56: Add Content-Security-Policy header and auth endpoint rate limiting to Nginx config
+nginx.conf is included inside nginx:1.27-alpine's http{} block via conf.d/default.conf. This means http-context directives like `limit_req_zone` can be placed before the `server{}` block in that file and are parsed correctly. Validated with `docker run nginx:1.27-alpine nginx -t`. Ant Design v5 CSS-in-JS requires `style-src 'unsafe-inline'` in CSP — cannot be removed without upstream Ant Design nonce support.

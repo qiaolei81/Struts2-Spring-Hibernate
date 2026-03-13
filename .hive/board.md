@@ -2,9 +2,8 @@
 
 ## Current Tasks
 
-- 🔄 `t52` **Final repository housekeeping: verify fork stays synced with any upstream pushes, confirm .env is gitignored, validate deployment docs are self-contained for a cold-clone** (devops) - in_progress
-- ⏳ `t53` **Project closure report: delivery summary, post-launch backlog (one-item: MISMATCH-1 resolved), operational handover notes, and known risks for the upstream maintainer** (pm) - pending
-- ⏳ `t54` **Technical handover document: ADR summary, architecture overview, refactoring opportunities, scale considerations, and future development guide for new contributors** (architect) - pending
+- 🔄 `t59` **Push hardening commits to fork and update PR #1** (devops) - in_progress
+- ⏳ `t60` **Final sign-off: confirm hardening commits in PR #1 and project fully closed** (pm) - pending
 
 ## Completed Tasks
 
@@ -59,3 +58,10 @@
 - ✅ `t49` **Final upstream merge confirmation and project handover** (pm)
 - ✅ `t50` **Monitor PR #1 for upstream maintainer merge and confirm project closure** (pm)
 - ✅ `t51` **Follow up on upstream PR #1 merge: post polite reminder if not yet merged, confirm delivery-team project state regardless of upstream action** (pm)
+- ✅ `t52` **Final repository housekeeping: verify fork stays synced with any upstream pushes, confirm .env is gitignored, validate deployment docs are self-contained for a cold-clone** (devops)
+- ✅ `t53` **Project closure report: delivery summary, post-launch backlog (one-item: MISMATCH-1 resolved), operational handover notes, and known risks for the upstream maintainer** (pm)
+- ✅ `t54` **Technical handover document: ADR summary, architecture overview, refactoring opportunities, scale considerations, and future development guide for new contributors** (architect)
+- ✅ `t55` **Fix N+1 getRoleStats query, bulk UPDATE clearInactiveUsers, and add JWT secret startup validation** (backend)
+- ✅ `t56` **Add Content-Security-Policy header and auth endpoint rate limiting to Nginx config** (devops)
+- ✅ `t57` **Re-run full test suite and verify all hardening fixes pass with zero regressions** (tester)
+- ✅ `t58` **Final sign-off: confirm hardening improvements complete, no regressions, and rewrite is fully production-ready** (pm)

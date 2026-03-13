@@ -1,7 +1,7 @@
 # t46 PM Artifact — PR #1 Upstream Merge Readiness Review
 
 **Task:** t46 | **Role:** PM | **Status:** ✅ MERGE APPROVED — WITH ONE ADVISORY NOTE
-**Verified at:** 2026-03-13T12:19Z (live GitHub API read)
+**Verified at:** 2026-03-13T12:19Z (initial) | **Re-verified:** 2026-03-13T12:32Z after t52 push
 
 ---
 
@@ -11,7 +11,7 @@
 
 ---
 
-## PR #1 — Live State
+## PR #1 — Live State (re-verified after t52 push)
 
 | Field | Value |
 |---|---|
@@ -20,13 +20,28 @@
 | State | **OPEN** |
 | Draft | false |
 | Merged | false |
-| Mergeable state | **clean** (no conflicts) |
-| Head SHA | `130fe0818df0677ded64d7b276c978d9962cd464` |
-| Commits | 20 |
-| Files changed | 204 |
-| Additions / Deletions | +22,729 / −23 |
+| Mergeable state | **unstable** (see note below) |
+| Head SHA | `27e9880d70fde6ae3c7f25e1dc46ec0bfd6187e6` |
+| Commits | 22 (+2 since t45) |
+| Files changed | 222 |
+| Additions / Deletions | +24,618 / −51 |
 | PR reviews | 0 (no blocking reviews) |
-| Last updated | 2026-03-13T12:15:44Z |
+| Last updated | 2026-03-13T12:32:10Z |
+
+### t52 commits added to PR
+
+| SHA | Message |
+|---|---|
+| `dfc70418` | docs: rewrite README for new stack with Docker Compose quick-start |
+| `27e9880d` | chore: commit hive operational artifacts through t52 final housekeeping |
+
+These are documentation and `.hive/` metadata changes only. No functional code, test, or configuration changes.
+
+### `mergeable_state: unstable` — Explanation
+
+`unstable` is driven by GitGuardian's `neutral` conclusion on the new check run (`66951774833`, completed 12:32:46Z). Same advisory as before — test fixture `admin123` in historical commit `0b3e467c`. No new secrets introduced by t52.
+
+**`unstable` ≠ blocked.** GitHub uses `unstable` when a check returns a non-`success` conclusion. The upstream maintainer is not prevented from merging. This is distinct from `blocked` (required review missing) or `dirty` (merge conflicts).
 
 ---
 

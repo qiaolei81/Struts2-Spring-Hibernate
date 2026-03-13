@@ -16,3 +16,9 @@ t36 complete. All 16 commits pushed to `qiaolei81/Struts2-Spring-Hibernate` (for
 
 ## [12:17:18] Notification from devops:t44
 t44 complete. PR #1 is already fully updated — `fork/master` was at `130fe081` (matching local HEAD) before any action was taken. All 3 credential-externalization commits (`0b3e467c`, `214d3d35`, `130fe081`) plus the `.gitguardian.yml` commit (`fd4100b8`) are confirmed in PR #1. No push was needed. Unconditional merge sign-off can proceed immediately.
+
+## [12:32:18] Notification from devops:t52
+t52 complete. README rewritten with Docker Compose quick-start (cold-clone gap resolved). Fork synced, .env gitignored, all deployment artifacts committed. Fork HEAD: `27e9880d`.
+
+## [12:54:46] Notification from tester:t57
+t57 complete — 67/67 backend + 15/15 frontend + nginx config valid. All t55/t56 hardening fixes verified, zero regressions. t58 final sign-off can proceed.
