@@ -31,7 +31,7 @@ public class RoleController {
     public ApiResponse<Page<RoleDto>> listRoles(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String q) {
+            @RequestParam(name = "name", required = false) String q) {
         Pageable pageable = PageRequest.of(page, size);
         return ApiResponse.ok(roleService.listRoles(q, pageable));
     }

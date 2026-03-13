@@ -40,7 +40,7 @@ public class DocumentController {
     public ApiResponse<Page<DocumentDto>> listDocuments(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String q) {
+            @RequestParam(name = "name", required = false) String q) {
         Pageable pageable = PageRequest.of(page, size);
         return ApiResponse.ok(documentService.listDocuments(q, pageable));
     }
