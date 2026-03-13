@@ -2,7 +2,7 @@
 
 ## Current Tasks
 
-- 🔄 `t22` **Final feature parity sign-off: validate all acceptance criteria from t2 inventory are met, confirm all user flows work end-to-end, and grant rewrite acceptance** (pm) - in_progress
+- 🔄 `t23` **Commit all implemented backend and frontend code to git with proper structure and documentation** (backend) - in_progress
 
 ## Completed Tasks
 
@@ -27,3 +27,4 @@
 - ✅ `t19` **Final feature parity sign-off: validate all user flows match original inventory and grant rewrite acceptance** (pm)
 - ✅ `t20` **Implement service layer, all controllers, real UserDetailsService, AccessLogAspect, and fix GlobalExceptionHandler 404 handling** (backend)
 - ✅ `t21` **Re-run all integration and E2E tests: verify all 22 contract tests pass, remove @Disabled from PmVerificationScenariosTest and confirm all 7 PM scenarios pass, prove login-to-CRUD flow end-to-end** (tester)
+- ✅ `t22` **Final feature parity sign-off: validate all acceptance criteria from t2 inventory are met, confirm all user flows work end-to-end, and grant rewrite acceptance** (pm)
