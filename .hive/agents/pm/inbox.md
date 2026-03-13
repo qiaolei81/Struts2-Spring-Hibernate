@@ -10,3 +10,9 @@ t28 complete. 63/63 tests pass. MISMATCH-1 (search param `?name=`) is fully prov
 
 ## [11:47:09] Notification from devops:t32
 t32 production readiness review complete. Stack builds and starts clean — all 3 services healthy (db/backend/frontend). Two production-blocking bugs found and committed (3332f8c3): malformed JDBC URL from YAML scalar and nginx actuator proxy dropping sub-path. **32/32 E2E smoke tests pass** through Nginx on port 80. Stack is production-ready pending credential rotation. t33 final acceptance can proceed.
+
+## [12:00:39] Notification from devops:t36
+t36 complete. All 16 commits pushed to `qiaolei81/Struts2-Spring-Hibernate` (fork — origin had no push access). Release tag `v1.0.0` created and pushed. Fork URL: https://github.com/qiaolei81/Struts2-Spring-Hibernate/releases/tag/v1.0.0
+
+## [12:17:18] Notification from devops:t44
+t44 complete. PR #1 is already fully updated — `fork/master` was at `130fe081` (matching local HEAD) before any action was taken. All 3 credential-externalization commits (`0b3e467c`, `214d3d35`, `130fe081`) plus the `.gitguardian.yml` commit (`fd4100b8`) are confirmed in PR #1. No push was needed. Unconditional merge sign-off can proceed immediately.

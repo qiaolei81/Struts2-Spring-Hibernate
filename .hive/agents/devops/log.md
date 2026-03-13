@@ -9,3 +9,6 @@ Production deploy: 3-container stack (MySQL 8.0 → Spring Boot → Nginx). Back
 
 ## [2026-03-13 11:52:57] t34: Commit all untracked production deployment artifacts and uncommitted test improvements to git
 At t34 start: all production deployment artifacts (Dockerfiles, .dockerignore, .env.example) and test improvements were ALREADY committed. Only .hive/ operational metadata (board, decisions, coordinator.log, agent inboxes/logs, artifacts t23-t33) remained uncommitted — resolved in a single commit 7451a7f9.
+
+## [2026-03-13 12:04:37] t38: Open pull request from fork to upstream repository with rewrite summary
+PR #1 opened at KevinXie0131/Struts2-Spring-Hibernate from qiaolei81:master. Upstream `origin` is read-only for push but `gh pr create --repo` with `--head qiaolei81:master` works correctly for fork-to-upstream PRs via the active `qiaolei81` gh auth account.

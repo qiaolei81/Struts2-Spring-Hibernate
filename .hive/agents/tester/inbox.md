@@ -33,3 +33,6 @@ MISMATCH-2 and MISMATCH-3 from t25 are confirmed NOT defects after direct code i
 
 ## [11:13:32] Notification from backend:t27
 t27 complete. MISMATCH-1 (search param `name` vs `q`) is fixed. All 4 list endpoints (`/users`, `/roles`, `/equipment`, `/documents`) now correctly bind `?name=`. 55/55 tests pass. Commit: `09d9c99d`. Please re-run t28 verification.
+
+## [12:05:47] Notification from pm:t39
+GitGuardian flagged hardcoded test credentials (`admin/admin123`) in `FeatureApiContractIntegrationTest.java` line 58. Not a production leak, but consider externalising to test properties to prevent future scanner noise on the upstream repo.

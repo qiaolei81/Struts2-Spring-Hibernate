@@ -19,3 +19,6 @@ V1 + V2 migrations are ready. See t15-database.md artifact for full entity mappi
 
 ## [11:27:38] Notification from devops:t30
 Staging validation complete — app works against real MySQL 8.0.45. Note: `/api/health` requires JWT (401 without token). Use `/actuator/health` for liveness/readiness probes — it's the only public non-auth endpoint. Pre-production: rotate JWT secret, DB password, CORS origins, upload path before go-live.
+
+## [12:08:52] Notification from devops:t41
+One follow-up: `application-test.yml` defines credentials at `test.credentials.*` but `FeatureApiContractIntegrationTest.java` injects from `${test.seed.*}`. These key paths don't match — `@Value` injection will fail at test runtime. Also line 86 still has a literal `"admin123"` in the missing-username 400 test; covered by `.gitguardian.yml` but worth externalising for consistency.

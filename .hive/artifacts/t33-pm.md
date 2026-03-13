@@ -1,17 +1,18 @@
 # t33 PM Artifact — Final Production Acceptance Sign-Off
 
-**Task:** t33 | **Role:** PM | **Status:** ✅ SIGN-OFF GRANTED — WITH DEPLOYMENT GATE  
+**Task:** t33 | **Role:** PM | **Status:** ✅ SIGN-OFF GRANTED — PRODUCTION ACCEPTED  
 **Assessment date:** 2026-03-13  
 **Prior sign-offs:** t22 (feature parity), t26 (RBAC fix), t29 (search filter fix), t32 (infra E2E validation)  
-**This scope:** Final acceptance — rewrite completeness, production deployment artifacts, git state audit
+**Release:** [v1.0.0](https://github.com/qiaolei81/Struts2-Spring-Hibernate/releases/tag/v1.0.0) @ `qiaolei81/Struts2-Spring-Hibernate`  
+**This scope:** Final acceptance — rewrite completeness, production deployment artifacts, git state audit, release tag verification
 
 ---
 
-## ✅ SIGN-OFF GRANTED — REWRITE COMPLETE
+## ✅ SIGN-OFF GRANTED — PRODUCTION ACCEPTED
 
-The rewrite is **fully accepted as a product**. All 10 feature modules are implemented, all acceptance criteria from the t2 inventory are met, and 110/110 tests pass (63 backend + 15 frontend + 32 E2E smoke). The production Docker stack builds clean and starts all three services healthy.
+The rewrite is **fully accepted for production**. All 10 feature modules are implemented, all acceptance criteria from the t2 inventory are met, and 110/110 tests pass (63 backend + 15 frontend + 32 E2E smoke). The production Docker stack builds clean, starts all three services healthy, and the complete codebase is published as release tag `v1.0.0`.
 
-**One deployment gate remains open** (not a product defect — a git state issue): the production deployment artifacts (Dockerfiles, `.env.example`, `.dockerignore` files) exist on disk and have been validated, but are **not committed to the repository**. These must be committed before a clean-repo deployment is possible. This does not affect product acceptance; it affects deployment repeatability.
+**Deployment gate (flagged during t33 review) has been closed by t36:** all production deployment artifacts (`backend/Dockerfile`, `frontend/Dockerfile`, `.dockerignore` files, `.env.example`) are committed and present in the v1.0.0 release tree. A fresh `git clone` + `docker compose up --build` is now fully self-contained.
 
 ---
 
@@ -21,30 +22,21 @@ The rewrite is **fully accepted as a product**. All 10 feature modules are imple
 
 ---
 
-## ⚠️ OPEN DEPLOYMENT GATE: Untracked Production Artifacts
+## ✅ DEPLOYMENT GATE CLOSED (t36)
 
-The following files exist on disk (confirmed working by t32) but are **NOT committed to git**:
+The deployment gate flagged during the t33 review has been resolved by t36. All previously untracked files are now committed and present in the v1.0.0 release tree on GitHub:
 
-| File | Description | State |
+| File | Status at t33 | Status after t36 |
 |---|---|---|
-| `backend/Dockerfile` | Multi-stage Maven + Temurin 21 JRE build | ⚠️ Untracked |
-| `backend/.dockerignore` | Excludes `target/` and local config from Docker build context | ⚠️ Untracked |
-| `frontend/Dockerfile` | Multi-stage Node 20 Vite build + Nginx 1.27 serve | ⚠️ Untracked |
-| `frontend/.dockerignore` | Excludes `node_modules/`, `dist/` from Docker build context | ⚠️ Untracked |
-| `.env.example` | Operator documentation for all required environment variables | ⚠️ Untracked |
+| `backend/Dockerfile` | ⚠️ Untracked | ✅ Committed (260ecfb0) + tagged v1.0.0 |
+| `backend/.dockerignore` | ⚠️ Untracked | ✅ Committed + tagged |
+| `frontend/Dockerfile` | ⚠️ Untracked | ✅ Committed + tagged |
+| `frontend/.dockerignore` | ⚠️ Untracked | ✅ Committed + tagged |
+| `.env.example` | ⚠️ Untracked | ✅ Committed + tagged |
+| `FeatureApiContractIntegrationTest.java` | ⚠️ Uncommitted changes | ✅ Committed (e33a4f5d) + tagged |
+| `test-seed.sql` | ⚠️ Uncommitted changes | ✅ Committed + tagged |
 
-Additionally, two test files have improvements that exist in the working tree but were not committed with the final t28 commit:
-
-| File | Uncommitted Change |
-|---|---|
-| `backend/src/test/.../FeatureApiContractIntegrationTest.java` | Stronger assertions (content value checks, not just `.isArray()`) and display name improvements from t28 |
-| `backend/src/test/resources/test-seed.sql` | Search filter seed data (2 equipment + 2 document records) required by filter proof tests |
-
-**Impact:** A fresh `git clone` of the repository would be missing the Dockerfiles and `.env.example`. `docker compose up --build` would fail. The test improvements are also lost on a fresh clone, reducing test signal quality.
-
-**Action required before any production deployment:** Commit all untracked deployment artifacts and the working-tree test file changes. This is an operational step, not a code change.
-
-[notify:devops] Untracked deployment artifacts found in git working tree: `backend/Dockerfile`, `frontend/Dockerfile`, `backend/.dockerignore`, `frontend/.dockerignore`, `.env.example` are all present on disk but NOT committed. Also `backend/src/test/.../FeatureApiContractIntegrationTest.java` and `backend/src/test/resources/test-seed.sql` have uncommitted working-tree changes. These must be committed before a clean deployment is possible. Please commit in a follow-up task.
+Release verified at: https://github.com/qiaolei81/Struts2-Spring-Hibernate/releases/tag/v1.0.0
 
 ---
 
@@ -176,4 +168,5 @@ The following is accepted as complete and production-ready:
 | t22 | 55/55 | Full feature parity | ✅ ACCEPTED |
 | t26 | 55/55 | V3 RBAC fix sound | ✅ ACCEPTED (staging gate) |
 | t29 | 63/63 | MISMATCH-1 search filter fixed | ✅ ACCEPTED |
-| **t33** | **110/110** | Infra bugs fixed, stack validated E2E on port 80; untracked deployment artifacts found and flagged | **✅ PRODUCT ACCEPTED — deployment gate open** |
+| **t33** | **110/110** | Infra bugs fixed, stack validated E2E on port 80; deployment artifacts flagged untracked | ✅ PRODUCT ACCEPTED |
+| **t36** | Release | All artifacts committed + pushed + tagged `v1.0.0` on GitHub | **✅ PRODUCTION ACCEPTED — ALL GATES CLOSED** |
