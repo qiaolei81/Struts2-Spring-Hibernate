@@ -102,19 +102,13 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<RoleStatDto> getRoleStats() {
-        List<User> users = userRepository.findAll();
-        Map<String, Long> counts = new HashMap<>();
-        for (User user : users) {
-            for (Role role : user.getRoles()) {
-                counts.merge(role.getName(), 1L, Long::sum);
-            }
+        List<Object[]> rows = userRepository.countUsersByRole();
+        if (rows.isEmpty()) {
+            return List.of(new RoleStatDto("No Role", 0L));
         }
-        if (counts.isEmpty()) {
-            counts.put("No Role", 0L);
-        }
-        return counts.entrySet().stream()
-            .map(e -> new RoleStatDto(e.getKey(), e.getValue()))
-            .collect(Collectors.toList());
+        return rows.stream()
+                .map(row -> new RoleStatDto((String) row[0], (Long) row[1]))
+                .collect(Collectors.toList());
     }
 
     @Transactional

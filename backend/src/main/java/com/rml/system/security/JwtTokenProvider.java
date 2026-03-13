@@ -2,6 +2,7 @@ package com.rml.system.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
+    private final String rawSecret;
     private final SecretKey signingKey;
     private final long expirationMs;
     private final long refreshExpirationMs;
@@ -27,9 +29,24 @@ public class JwtTokenProvider {
             @Value("${app.jwt.secret}") String secret,
             @Value("${app.jwt.expiration-ms}") long expirationMs,
             @Value("${app.jwt.refresh-expiration-ms}") long refreshExpirationMs) {
+        this.rawSecret = secret;
         this.signingKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.expirationMs = expirationMs;
         this.refreshExpirationMs = refreshExpirationMs;
+    }
+
+    /**
+     * Rejects the shipped placeholder secret at startup so the application
+     * cannot accidentally run in production with a well-known key.
+     * Called automatically by Spring after construction; also callable directly in tests.
+     */
+    @PostConstruct
+    void init() {
+        if (rawSecret.contains("replace-in-production")) {
+            throw new IllegalStateException(
+                    "app.jwt.secret is the default placeholder value. " +
+                    "Set APP_JWT_SECRET (or app.jwt.secret) to a secure random key before deployment.");
+        }
     }
 
     /**

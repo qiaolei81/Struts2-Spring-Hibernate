@@ -83,4 +83,25 @@ class JwtTokenProviderTest {
         String refresh = provider.generateRefreshToken("charlie");
         assertThat(provider.getSubject(refresh)).isEqualTo("charlie");
     }
+
+    // ── @PostConstruct validation (init) ────────────────────────────────────
+
+    @Test
+    @DisplayName("init() throws IllegalStateException for the shipped placeholder secret")
+    void init_throwsForPlaceholderSecret() {
+        JwtTokenProvider insecure = new JwtTokenProvider(
+                "your-256-bit-secret-key-replace-in-production-must-be-at-least-32-chars",
+                EXPIRATION_MS, REFRESH_EXPIRATION_MS);
+        assertThatThrownBy(insecure::init)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("placeholder");
+    }
+
+    @Test
+    @DisplayName("init() does not throw for a valid non-placeholder secret")
+    void init_acceptsValidSecret() {
+        JwtTokenProvider p = new JwtTokenProvider(SECRET, EXPIRATION_MS, REFRESH_EXPIRATION_MS);
+        // Should not throw
+        p.init();
+    }
 }

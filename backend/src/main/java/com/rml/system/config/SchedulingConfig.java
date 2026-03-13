@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -17,16 +18,12 @@ public class SchedulingConfig {
 
     /**
      * ADR-13: Users inactive for >30 minutes are treated as offline.
-     * This scheduled task runs every 5 minutes to clear stale lastActivity values.
+     * Replaced O(N) findAll + per-entity save with a single bulk UPDATE statement.
      */
     @Scheduled(fixedDelay = 300_000)
+    @Transactional
     public void clearInactiveUsers() {
         LocalDateTime threshold = LocalDateTime.now().minusMinutes(30);
-        userRepository.findAll().stream()
-            .filter(u -> u.getLastActivity() != null && u.getLastActivity().isBefore(threshold))
-            .forEach(u -> {
-                u.setLastActivity(null);
-                userRepository.save(u);
-            });
+        userRepository.clearActivityBefore(threshold);
     }
 }
