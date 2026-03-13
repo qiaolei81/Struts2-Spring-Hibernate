@@ -20,18 +20,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * Seed data: test-seed.sql injects admin user (password "admin123") + ADMINISTRATOR role.
  *
- * KNOWN BACKEND BUGS (failing tests prove these — see [notify:backend]):
- *   BUG-1: LazyInitializationException in UserService.listUsers, listAll, getRoleStats,
- *          authenticate, getActiveUsers — missing @Transactional(readOnly=true)
- *   BUG-2: LazyInitializationException in RoleService.listRoles, listAllRoles
- *          — missing @Transactional(readOnly=true)
+ * RESOLVED BUGS (all fixed in t20/t21):
+ *   BUG-1: LazyInitializationException in UserService — fixed with @Transactional(readOnly=true)
+ *   BUG-2: LazyInitializationException in RoleService — fixed with @Transactional(readOnly=true)
  *
- * KNOWN CONTRACT MISMATCHES (see [notify:backend] + [notify:frontend]):
- *   MISMATCH-1: Search param — backend uses "q", frontend sends "name" on /users, /roles,
- *               /equipment, /documents
- *   MISMATCH-2: Online users path — backend "/online", frontend "/online-users"
- *   MISMATCH-3: Document manual download — backend "GET /documents/{id}/manual" (by ID),
- *               frontend "GET /documents/manual/{filename}" (by filename)
+ * KNOWN CONTRACT MISMATCHES:
+ *   MISMATCH-1 (post-launch backlog): Search param — backend uses "q", frontend sends "name"
+ *               on /users, /roles, /equipment, /documents
+ *   MISMATCH-2 (RESOLVED — not a defect): OnlineController accepts both "/online" and "/online-users"
+ *   MISMATCH-3 (RESOLVED — not a defect): DocumentController implements both "/{id}/manual"
+ *               and "/manual/{filename}"
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
