@@ -160,3 +160,54 @@ PR #1 is fully ready to merge into `KevinXie0131/Struts2-Spring-Hibernate:master
 | Nginx config | valid | valid | 0 |
 
 ### ✅ t58 FINAL SIGN-OFF GRANTED — hardening complete, zero regressions, project production-ready.
+
+---
+
+## t60 Final Sign-Off (t59 — hardening pushed to fork + PR updated)
+
+**Fork HEAD after t59:** `3adbb465` (= local HEAD ✅)
+
+### Verified
+
+| Check | Result |
+|---|---|
+| Fork HEAD `3adbb465` matches local master | ✅ |
+| Commits `c5ebab80` (backend hardening) + `70b05eff` (nginx) on fork | ✅ |
+| PR #1 head SHA = `3adbb465` | ✅ |
+| PR `mergeable_state` | ✅ `clean` |
+| PR body includes Hardening Improvements section | ✅ |
+| PR delivery checklist includes t58 gate (82 tests) | ✅ |
+| GitGuardian advisory documented in PR with false-positive explanation | ✅ |
+| 25 commits, 229 files, +26,608 / -51 lines | ✅ |
+
+### ✅ t60 FINAL SIGN-OFF GRANTED
+
+PR #1 is merge-ready at `3adbb465`. All hardening commits are included. PR description is complete and accurate. No product gaps remain. The rewrite is fully delivered.
+
+---
+
+## t78 Final Closure (t77 — README credentials fix)
+
+**Commit:** `42f25cb7` — `docs: fix default credentials in README quick-start`  
+**Change:** `README.md` — 1 file, 1 line (`admin123` → `admin`)  
+**Fork HEAD:** `42f25cb7` ✅
+
+### Why This Fix Matters
+
+| Credential | Context | Correct value |
+|---|---|---|
+| README quick-start "default credentials" | Production — V2 seed data (`BCrypt("admin")`) | `admin / admin` ✅ |
+| `application-test.yml` + TestDataSeeder | Test harness only (H2, profile=test) | `admin / admin123` |
+
+Showing `admin123` in the quick-start would silently block every cold-clone user on first login. This is a user-facing correctness issue, not cosmetic.
+
+### Verification
+
+| Check | Result |
+|---|---|
+| Commit touches `README.md` only — zero production code | ✅ |
+| 82/82 tests pass at `42f25cb7` | ✅ |
+| Fork HEAD = local HEAD | ✅ |
+| Repo clean | ✅ |
+
+### ✅ t78 FINAL CLOSURE GRANTED — no remaining product gaps.

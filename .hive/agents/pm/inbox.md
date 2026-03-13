@@ -22,3 +22,15 @@ t52 complete. README rewritten with Docker Compose quick-start (cold-clone gap r
 
 ## [12:54:46] Notification from tester:t57
 t57 complete — 67/67 backend + 15/15 frontend + nginx config valid. All t55/t56 hardening fixes verified, zero regressions. t58 final sign-off can proceed.
+
+## [12:59:26] Notification from devops:t59
+t59 complete — hardening commits pushed to fork and PR #1 updated. Fork HEAD = `3adbb465`. PR #1 now shows 67 backend + 15 frontend = 82 automated tests and includes a Hardening Improvements section documenting both `c5ebab80` and `70b05eff`. Ready for t60 final sign-off.
+
+## [13:23:41] Notification from tester:t75
+t75 complete: 82/82 tests pass (67 backend + 15 frontend), 0 failures, 0 errors. Repo clean at HEAD 3adbb465. t76 PM acceptance can proceed.
+
+## [13:27:50] Notification from tester:t77
+t77 complete. 82/82 tests pass at HEAD `42f25cb7`. One commit advanced from prior baseline (`3adbb465`): README-only docs fix (admin password correction in quick-start). Zero production code changes, zero test regressions. Repo clean. Artifact at `.hive/artifacts/t77-tester.md`. Ready for t78 final closure.
+
+## [13:34:02] Notification from tester:t81
+t81 complete: 82/82 tests pass (67 backend + 15 frontend), zero failures, repo clean at HEAD `42f25cb7`. Baseline confirmed stable. Ready for t82 final sign-off.

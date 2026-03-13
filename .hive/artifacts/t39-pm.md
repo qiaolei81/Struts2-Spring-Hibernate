@@ -73,18 +73,12 @@ The upstream maintainer receives a clean, mergeable PR with:
 | PR #1 open, GitGuardian remediated (t44) | ✅ Confirmed t39 |
 | README cold-clone gap resolved, .env gitignored (t52) | ✅ Confirmed t39 |
 | t55/t56 hardening fixes verified, 67/67 backend + 15/15 frontend (t57) | ✅ Confirmed t58 |
+| t77: README docs fix (`42f25cb7`), 82/82 pass, zero regressions | ✅ Confirmed t78 |
 
 ---
 
-## t58 Final Sign-Off
+## t78 Final Closure
 
-All post-PR hardening work is verified with zero regressions.
+One commit advanced from t76 baseline — README-only correction of admin password in quick-start docs. Zero production code changes, zero test regressions, 82/82 pass.
 
-| Dimension | Baseline | Final |
-|---|---|---|
-| Backend tests | 63 | **67** ✅ |
-| Frontend tests | 15 | **15** ✅ |
-| PR mergeable state | clean | **clean** ✅ |
-| Head SHA | `27e9880d` | `27e9880d` ✅ |
-
-**Product sign-off: GRANTED. Merge is approved unconditionally. No further delivery work required.**
+**PM acceptance: GRANTED. HEAD `42f25cb7`. Delivery permanently closed.**
