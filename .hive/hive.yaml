@@ -1,0 +1,21 @@
+team:
+  maxConcurrent: 4
+  maxRetry: 2
+  agents:
+    - role: pm
+    - role: ux
+    - role: architect
+    - role: backend
+    - role: frontend
+    - role: database
+    - role: devops
+    - role: security
+    - role: tester
+defaults:
+  harness: copilot
+  models:
+    - claude-opus-4.6
+    - claude-sonnet-4.6
+    - gpt-5.4
+features:
+  webSearch: true
