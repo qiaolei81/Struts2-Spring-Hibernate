@@ -34,3 +34,6 @@ t77 complete. 82/82 tests pass at HEAD `42f25cb7`. One commit advanced from prio
 
 ## [13:34:02] Notification from tester:t81
 t81 complete: 82/82 tests pass (67 backend + 15 frontend), zero failures, repo clean at HEAD `42f25cb7`. Baseline confirmed stable. Ready for t82 final sign-off.
+
+## [13:50:32] Notification from tester:t89
+t89 complete: 82/82 pass deterministically at HEAD ee6df169. DocumentUploadOverwrite passes on clean and dirty /tmp state (3 runs verified). Baseline is stable — ready for t90 final acceptance.

@@ -1,5 +1,11 @@
 package com.rml.system.integration;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -49,6 +55,9 @@ class PmVerificationScenariosTest {
 
     @Value("${test.seed.admin-password}")
     private String adminPassword;
+
+    @Value("${app.upload.base-dir}")
+    private String uploadBaseDir;
 
     // ── Scenario 1: Login → JWT flow ─────────────────────────────────────────
 
@@ -195,6 +204,21 @@ class PmVerificationScenariosTest {
     @DisplayName("Scenario 4: Document manual upload — overwrite behavior")
     @Transactional
     class DocumentUploadOverwrite {
+
+        @BeforeEach
+        void cleanUploadDir() throws IOException {
+            Path dir = Paths.get(uploadBaseDir);
+            if (Files.isDirectory(dir)) {
+                try (var entries = Files.list(dir)) {
+                    entries.forEach(p -> {
+                        try {
+                            Files.deleteIfExists(p);
+                        } catch (IOException ignored) {
+                        }
+                    });
+                }
+            }
+        }
 
         @Test
         @DisplayName("Uploading a file with the same name overwrites the prior file; record reflects latest")
