@@ -269,7 +269,6 @@ class PmVerificationScenariosTest {
 
     @Nested
     @DisplayName("Scenario 5: AOP logging — entries written for key actions")
-    @Transactional
     class AopLogging {
 
         @Test

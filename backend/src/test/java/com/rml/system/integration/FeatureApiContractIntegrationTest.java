@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * End-to-end contract verification for all major feature API endpoints.
  *
- * Seed data: test-seed.sql injects admin user (password "admin") + ADMINISTRATOR role.
+ * Seed data: test-seed.sql injects admin user (password "admin123") + ADMINISTRATOR role.
  *
  * KNOWN BACKEND BUGS (failing tests prove these — see [notify:backend]):
  *   BUG-1: LazyInitializationException in UserService.listUsers, listAll, getRoleStats,
@@ -57,7 +57,7 @@ class FeatureApiContractIntegrationTest {
             mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content("""
-                                    {"username":"admin","password":"admin"}
+                                    {"username":"admin","password":"admin123"}
                                     """))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.token").isNotEmpty())

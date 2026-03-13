@@ -17,7 +17,7 @@ import java.util.Set;
  * Seeds a predictable admin user for integration tests.
  * Uses fixed IDs so test-seed.sql can reference them by ID.
  * Runs once at application context startup (before any @Sql scripts).
- * Password = "admin" — matches FeatureApiContractIntegrationTest.login_validCredentials.
+ * Password = "admin123" — matches FeatureApiContractIntegrationTest.login_validCredentials.
  */
 @Component
 @Profile("test")
