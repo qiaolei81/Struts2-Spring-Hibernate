@@ -2,7 +2,8 @@
 -- Loaded via @Sql(BEFORE_TEST_CLASS) — must be IDEMPOTENT.
 -- TestDataSeeder (Profile=test ApplicationRunner) already creates admin + roles.
 -- INSERT IGNORE silently skips duplicates (H2 MySQL-compatibility mode).
--- Password for admin = "admin123"  (BCrypt hash via htpasswd -bnBC 10)
+-- Password hash for the test admin account (BCrypt, cost 10).
+-- Plain-text value is stored in application-test.yml under test.seed.admin-password.
 
 INSERT IGNORE INTO t_role (id, name, description, created_at, updated_at) VALUES
     ('0', 'ADMIN', 'Full access', NOW(), NOW()),
