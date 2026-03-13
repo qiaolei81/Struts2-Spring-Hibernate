@@ -21,3 +21,6 @@ t79: 82/82 pass at HEAD 42f25cb7, confirmed 2026-03-13T13:30Z. Backend 67, front
 
 ## [2026-03-13 13:37:40] t83: Run final 82-test suite and confirm stable baseline at current HEAD
 t83: 82/82 confirmed passing at HEAD 42f25cb7, 2026-03-13T13:37Z. Backend 67, frontend 15, zero failures. Stable baseline for PM final acceptance.
+
+## [2026-03-13 13:47:28] t87: Fix pre-existing DocumentUploadOverwrite test flakiness: add @BeforeEach upload directory cleanup in PmVerificationScenariosTest to eliminate /tmp/test-uploads stale-state failures
+`DocumentUploadOverwrite` flakiness fixed by `@BeforeEach` that wipes `/tmp/test-uploads` (via `Files.list()` + `deleteIfExists`) before each test in that nested class. Upload path injected via `@Value("${app.upload.base-dir}")` on outer class. Fix is in `PmVerificationScenariosTest.java` only — single-file, non-breaking change.

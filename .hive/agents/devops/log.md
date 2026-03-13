@@ -15,3 +15,6 @@ PR #1 opened at KevinXie0131/Struts2-Spring-Hibernate from qiaolei81:master. Ups
 
 ## [2026-03-13 12:49:30] t56: Add Content-Security-Policy header and auth endpoint rate limiting to Nginx config
 nginx.conf is included inside nginx:1.27-alpine's http{} block via conf.d/default.conf. This means http-context directives like `limit_req_zone` can be placed before the `server{}` block in that file and are parsed correctly. Validated with `docker run nginx:1.27-alpine nginx -t`. Ant Design v5 CSS-in-JS requires `style-src 'unsafe-inline'` in CSP — cannot be removed without upstream Ant Design nonce support.
+
+## [2026-03-13 13:44:21] t88: Commit all pending .hive session operational artifacts (t59–t86 artifacts, board, coordinator log) to git and push to fork; confirm fork/master is current with all session work
+t88: All .hive session artifacts t59–t88 committed in a208bea2 and pushed to fork (qiaolei81:master). fork/master now at a208bea2. origin (upstream) is 27 commits behind — that's expected; only fork is our push target.
