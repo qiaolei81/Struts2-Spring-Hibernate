@@ -2,7 +2,8 @@
 
 ## Current Tasks
 
-- 🔄 `t23` **Commit all implemented backend and frontend code to git with proper structure and documentation** (backend) - in_progress
+- 🔄 `t34` **Commit all untracked production deployment artifacts and uncommitted test improvements to git** (devops) - in_progress
+- ⏳ `t35` **Final delivery sign-off: confirm all artifacts committed, repo is clean, and rewrite is fully delivered with no remaining gaps** (pm) - pending
 
 ## Completed Tasks
 
@@ -28,3 +29,14 @@
 - ✅ `t20` **Implement service layer, all controllers, real UserDetailsService, AccessLogAspect, and fix GlobalExceptionHandler 404 handling** (backend)
 - ✅ `t21` **Re-run all integration and E2E tests: verify all 22 contract tests pass, remove @Disabled from PmVerificationScenariosTest and confirm all 7 PM scenarios pass, prove login-to-CRUD flow end-to-end** (tester)
 - ✅ `t22` **Final feature parity sign-off: validate all acceptance criteria from t2 inventory are met, confirm all user flows work end-to-end, and grant rewrite acceptance** (pm)
+- ✅ `t23` **Commit all implemented backend and frontend code to git with proper structure and documentation** (backend)
+- ✅ `t24` **Fix production role name mismatch: V3 migration to rename 'Administrator' to 'ADMIN' in t_role seed data** (database)
+- ✅ `t25` **Verify V3 migration, run full test suite, and confirm production RBAC works end-to-end after role name fix** (tester)
+- ✅ `t26` **Final sign-off: confirm role name fix resolves production RBAC, all 55 tests pass, and rewrite is production-ready** (pm)
+- ✅ `t27` **Fix search param mismatch: align backend controllers to accept 'name' query param for filtering** (backend)
+- ✅ `t28` **Verify search param fix: re-run full test suite and confirm search filters work end-to-end** (tester)
+- ✅ `t29` **Final sign-off: confirm search fix is complete and rewrite is fully production-ready with no known defects** (pm)
+- ✅ `t30` **Validate staging MySQL deployment: apply V1-V3 Flyway migrations, smoke test RBAC and all endpoints** (devops)
+- ✅ `t31` **Production deployment: write Docker Compose, Dockerfile for backend and frontend, Nginx reverse proxy config, and environment variable documentation** (devops)
+- ✅ `t32` **Final production readiness review: validate Docker Compose stack builds and starts end-to-end, confirm all services healthy** (devops)
+- ✅ `t33` **Final acceptance sign-off: confirm production deployment artifacts complete, rewrite is fully delivered with no remaining defects** (pm)

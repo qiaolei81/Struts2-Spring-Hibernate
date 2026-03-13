@@ -16,3 +16,6 @@ t14 PM sign-off blocked. Backend feature layer (t7/t8/t9/t5) was never implement
 
 ## [10:16:56] Notification from database:t15
 V1 + V2 migrations are ready. See t15-database.md artifact for full entity mapping notes. Critical: `t_authority.url` = permission code (PERM_*), not a REST path. Admin BCrypt hash (cost 10) = `$2b$10$o9MOH/VC1QDqMPVT1PqlF.S9c70BdszEBvIJDZ2NiPB1Ozd2qFSKq` for password "admin".
+
+## [11:27:38] Notification from devops:t30
+Staging validation complete — app works against real MySQL 8.0.45. Note: `/api/health` requires JWT (401 without token). Use `/actuator/health` for liveness/readiness probes — it's the only public non-auth endpoint. Pre-production: rotate JWT secret, DB password, CORS origins, upload path before go-live.

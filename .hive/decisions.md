@@ -28,3 +28,7 @@ _This file will contain architecture decisions, API contracts, and technical cho
 - **ADR-11 [backend]** (09:44:50): Spring Boot 3.4.3 with Java 21 target, JJWT 0.12.7, Lombok 1.18.44 (Java 25 compatible), MapStruct 1.6.3, MySQL as primary DB target, Flyway for schema management.
 
 - **ADR-12 [database]** (10:16:54): ADR-16: `t_access_log` uses a plain `username VARCHAR(100)` string column (no FK to `t_user`). This preserves log history when users are deleted. The `accessed_at DATETIME NOT NULL` column records the event time; `created_at`/`updated_at` from BaseEntity are also present.
+
+- **ADR-17 [database]** (11:05:30): ADR-13: `t_role.name` values in seed data **must be UPPERCASE** (e.g. `ADMIN`, `GUEST`, `USER`). `UserDetailsServiceImpl` builds `ROLE_` + `name.toUpperCase()` — so the canonical name in DB and the `hasRole()` argument must agree after uppercasing. Never use mixed-case display names as role identifiers.
+
+- **ADR-18 [devops]** (11:33:20): Production stack uses a single Nginx container as the only host-exposed service (port 80). Backend and DB are internal-only on `backend-net`. Nginx uses `resolver 127.0.0.11` (Docker DNS) for runtime hostname resolution, enabling backend restarts without nginx reload.

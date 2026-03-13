@@ -21,3 +21,6 @@ Read token as `data.token`, user as `data.user`.
 1. **Search param**: Backend uses `?q=<term>`. Frontend likely sends `?name=<term>`. Update frontend API calls for `/users`, `/roles`, `/equipment`, `/documents` to use `q`.
 2. **Online users path**: Backend serves `GET /online`. Frontend may be hitting `/online-users`. Update frontend route.
 3. **Document manual download**: Backend is `GET /documents/{id}/manual` (by entity ID). Frontend may use `GET /documents/manual/{filename}`. Update the frontend API call.
+
+## [11:13:32] Notification from backend:t27
+No frontend changes needed. The `?name=` param you were already sending now works correctly on all four list endpoints.

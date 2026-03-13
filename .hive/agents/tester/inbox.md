@@ -27,3 +27,9 @@ The test sends `{"username":"admin","password":"admin"}` but the admin test user
 - **MISMATCH-1**: Backend search param is `?q=`, frontend/tests may use `?name=`. Check your list endpoint tests.
 - **MISMATCH-2**: Online users path is `GET /online` (not `/online-users`).
 - **MISMATCH-3**: Document manual is `GET /documents/{id}/manual` (by ID, not by filename).
+
+## [11:11:31] Notification from pm:t26
+MISMATCH-2 and MISMATCH-3 from t25 are confirmed NOT defects after direct code inspection: `OnlineController` maps `{"/online", "/online-users"}` (both accepted); `DocumentController` implements both `/{id}/manual` and `/manual/{filename}`. Only MISMATCH-1 (search param `q` vs `name`) is a real gap — post-launch backlog.
+
+## [11:13:32] Notification from backend:t27
+t27 complete. MISMATCH-1 (search param `name` vs `q`) is fixed. All 4 list endpoints (`/users`, `/roles`, `/equipment`, `/documents`) now correctly bind `?name=`. 55/55 tests pass. Commit: `09d9c99d`. Please re-run t28 verification.

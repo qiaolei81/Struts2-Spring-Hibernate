@@ -1,13 +1,61 @@
 # t18 Tester Artifact — Integration & E2E Test Re-Run (Final)
 
 **Task:** t18 | **Role:** Tester | **Status:** COMPLETE ✅
-**Run date:** 2026-03-13 | **Final run:** 4th attempt after progressive fixes
+**Run date:** 2026-03-13 | **Final run:** t28 re-verification after t27 fix
 
 ---
 
-## ✅ Acceptance Gate: 22/22 Contract Tests PASS
+## ✅ t28 Verification: 55/55 — BUILD SUCCESS
+
+**MISMATCH-1 resolved (t27 commit `09d9c99d`):** All 4 list controllers now bind
+`@RequestParam(name = "name")`. Frontend `?name=` search is correctly handled.
+
+All 3 contract mismatches are now resolved. `PmVerificationScenariosTest` is fully
+enabled — all PM acceptance scenarios passing.
 
 ```
+Tests run: 55 | Failures: 0 | Errors: 0 | Skipped: 0
+BUILD SUCCESS
+```
+
+---
+
+## Final Test Results (t28 run)
+
+### Backend: `mvn test -Dspring.profiles.active=test`
+
+**55 run | 55 PASS | 0 FAIL | 0 SKIP — BUILD SUCCESS**
+
+| Test Class | Tests | Pass | Status |
+|---|---|---|---|
+| `JwtTokenProviderTest` | 7 | 7 | ✅ |
+| `SystemApplicationTests` | 1 | 1 | ✅ |
+| `HealthControllerIntegrationTest` | 2 | 2 | ✅ |
+| `SecurityFilterChainIntegrationTest` | 11 | 11 | ✅ |
+| `FeatureApiContractIntegrationTest` (22 tests) | 22 | 22 | ✅ |
+| `PmVerificationScenariosTest$LoginJwtFlow` | 2 | 2 | ✅ |
+| `PmVerificationScenariosTest$AdminBypass` | 2 | 2 | ✅ |
+| `PmVerificationScenariosTest$ExcelExport` | 2 | 2 | ✅ |
+| `PmVerificationScenariosTest$DocumentUploadOverwrite` | 2 | 2 | ✅ |
+| `PmVerificationScenariosTest$AopLogging` | 2 | 2 | ✅ |
+| `PmVerificationScenariosTest$OnlineUsers` | 1 | 1 | ✅ |
+| `PmVerificationScenariosTest$UploadSizeRegression` | 1 | 1 | ✅ |
+
+### Frontend: `npm test` (last confirmed run: t18)
+
+**15 run | 15 PASS — unchanged**
+
+---
+
+## Contract Mismatches — All Resolved
+
+| Mismatch | Description | Resolution |
+|---|---|---|
+| MISMATCH-1 | Search param `q` vs `name` on 4 list endpoints | ✅ Fixed t27 — `@RequestParam(name = "name")` in all 4 controllers |
+| MISMATCH-2 | OnlineController path `/online` vs `/online-users` | ✅ Not a defect — both paths accepted |
+| MISMATCH-3 | DocumentController manual paths `/{id}/manual` vs `/manual/{filename}` | ✅ Not a defect — both paths implemented |
+
+
 Tests run: 50 | Failures: 0 | Errors: 0 | Skipped: 7 (@Disabled)
 BUILD SUCCESS
 ```
