@@ -24,9 +24,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *   BUG-1: LazyInitializationException in UserService — fixed with @Transactional(readOnly=true)
  *   BUG-2: LazyInitializationException in RoleService — fixed with @Transactional(readOnly=true)
  *
- * KNOWN CONTRACT MISMATCHES:
- *   MISMATCH-1 (post-launch backlog): Search param — backend uses "q", frontend sends "name"
- *               on /users, /roles, /equipment, /documents
+ * CONTRACT MISMATCHES (all resolved):
+ *   MISMATCH-1 (RESOLVED — t27): Search param aligned: all 4 list controllers now bind
+ *               @RequestParam(name = "name") so ?name= from frontend is correctly handled.
  *   MISMATCH-2 (RESOLVED — not a defect): OnlineController accepts both "/online" and "/online-users"
  *   MISMATCH-3 (RESOLVED — not a defect): DocumentController implements both "/{id}/manual"
  *               and "/manual/{filename}"
@@ -95,14 +95,23 @@ class FeatureApiContractIntegrationTest {
         @Test
         @DisplayName("GET /users returns paginated user list")
         void getUsers_returnsPaginatedList() throws Exception {
-            // NOTE: fails until BUG-1 fixed (missing @Transactional on UserService.listUsers)
-            // NOTE: search param is "q" on backend; frontend sends "name" — MISMATCH-1
             mockMvc.perform(get("/users")
                             .param("page", "0")
                             .param("size", "10"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.content").isArray())
                     .andExpect(jsonPath("$.data.totalElements").isNumber());
+        }
+
+        @Test
+        @DisplayName("GET /users?name=admin filters by name (MISMATCH-1 fixed)")
+        void getUsers_filteredByName_returns200() throws Exception {
+            mockMvc.perform(get("/users")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("name", "admin"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.content").isArray());
         }
 
         @Test
@@ -121,7 +130,6 @@ class FeatureApiContractIntegrationTest {
         @Test
         @DisplayName("GET /users/all returns full user list (no pagination)")
         void getAllUsers_returnsArray() throws Exception {
-            // NOTE: fails until BUG-1 fixed (missing @Transactional on UserService.listAll)
             mockMvc.perform(get("/users/all"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data").isArray());
@@ -146,8 +154,6 @@ class FeatureApiContractIntegrationTest {
         @Test
         @DisplayName("GET /roles returns paginated role list")
         void getRoles_returnsPaginatedList() throws Exception {
-            // NOTE: fails until BUG-2 fixed (missing @Transactional on RoleService.listRoles)
-            // NOTE: search param is "q" on backend; frontend sends "name" — MISMATCH-1
             mockMvc.perform(get("/roles")
                             .param("page", "0")
                             .param("size", "10"))
@@ -156,9 +162,19 @@ class FeatureApiContractIntegrationTest {
         }
 
         @Test
+        @DisplayName("GET /roles?name=ADMIN filters by name (MISMATCH-1 fixed)")
+        void getRoles_filteredByName_returns200() throws Exception {
+            mockMvc.perform(get("/roles")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("name", "ADMIN"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.content").isArray());
+        }
+
+        @Test
         @DisplayName("GET /roles/all returns full role list")
         void getAllRoles_returnsArray() throws Exception {
-            // NOTE: fails until BUG-2 fixed (missing @Transactional on RoleService.listAllRoles)
             mockMvc.perform(get("/roles/all"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data").isArray());
@@ -226,10 +242,20 @@ class FeatureApiContractIntegrationTest {
         @Test
         @DisplayName("GET /equipment returns paginated list")
         void getEquipment_returnsPaginatedList() throws Exception {
-            // NOTE: search param is "q" on backend; frontend sends "name" — MISMATCH-1
             mockMvc.perform(get("/equipment")
                             .param("page", "0")
                             .param("size", "10"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.content").isArray());
+        }
+
+        @Test
+        @DisplayName("GET /equipment?name=Server filters by name (MISMATCH-1 fixed)")
+        void getEquipment_filteredByName_returns200() throws Exception {
+            mockMvc.perform(get("/equipment")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("name", "Server"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.content").isArray());
         }
@@ -266,10 +292,20 @@ class FeatureApiContractIntegrationTest {
         @Test
         @DisplayName("GET /documents returns paginated list")
         void getDocuments_returnsPaginatedList() throws Exception {
-            // NOTE: search param is "q" on backend; frontend sends "name" — MISMATCH-1
             mockMvc.perform(get("/documents")
                             .param("page", "0")
                             .param("size", "10"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.content").isArray());
+        }
+
+        @Test
+        @DisplayName("GET /documents?name=Manual filters by name (MISMATCH-1 fixed)")
+        void getDocuments_filteredByName_returns200() throws Exception {
+            mockMvc.perform(get("/documents")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("name", "Manual"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.content").isArray());
         }
@@ -326,7 +362,6 @@ class FeatureApiContractIntegrationTest {
         @Test
         @DisplayName("GET /users/stats/by-role returns role distribution array")
         void getUserStatsByRole_returnsArray() throws Exception {
-            // NOTE: fails until BUG-1 fixed (missing @Transactional on UserService.getRoleStats)
             mockMvc.perform(get("/users/stats/by-role"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data").isArray());
