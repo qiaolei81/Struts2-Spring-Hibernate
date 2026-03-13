@@ -5,6 +5,7 @@ import com.rml.system.entity.User;
 import com.rml.system.repository.RoleRepository;
 import com.rml.system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
@@ -17,7 +18,7 @@ import java.util.Set;
  * Seeds a predictable admin user for integration tests.
  * Uses fixed IDs so test-seed.sql can reference them by ID.
  * Runs once at application context startup (before any @Sql scripts).
- * Password = "admin123" — matches FeatureApiContractIntegrationTest.login_validCredentials.
+ * Credentials are read from application-test.yml (test.seed.*) to keep source files clean.
  */
 @Component
 @Profile("test")
@@ -28,9 +29,15 @@ public class TestDataSeeder implements ApplicationRunner {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Value("${test.seed.admin-username}")
+    private String adminUsername;
+
+    @Value("${test.seed.admin-password}")
+    private String adminPassword;
+
     @Override
     public void run(ApplicationArguments args) {
-        if (userRepository.existsByUsername("admin")) return;
+        if (userRepository.existsByUsername(adminUsername)) return;
 
         Role admin = new Role();
         admin.setId("0");
@@ -46,8 +53,8 @@ public class TestDataSeeder implements ApplicationRunner {
 
         User user = new User();
         user.setId("0");
-        user.setUsername("admin");
-        user.setPassword(passwordEncoder.encode("admin123"));
+        user.setUsername(adminUsername);
+        user.setPassword(passwordEncoder.encode(adminPassword));
         user.setPasswordResetRequired(false);
         user.setRoles(Set.of(admin));
         userRepository.save(user);

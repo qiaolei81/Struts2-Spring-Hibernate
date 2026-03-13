@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -18,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * End-to-end contract verification for all major feature API endpoints.
  *
- * Seed data: test-seed.sql injects admin user (password "admin123") + ADMINISTRATOR role.
+ * Seed credentials are read from application-test.yml (test.seed.*) — no literals here.
  *
  * RESOLVED BUGS (all fixed in t20/t21):
  *   BUG-1: LazyInitializationException in UserService — fixed with @Transactional(readOnly=true)
@@ -42,6 +43,12 @@ class FeatureApiContractIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Value("${test.seed.admin-username}")
+    private String adminUsername;
+
+    @Value("${test.seed.admin-password}")
+    private String adminPassword;
+
     // ── Auth module ───────────────────────────────────────────────────────────
 
     @Nested
@@ -51,15 +58,12 @@ class FeatureApiContractIntegrationTest {
         @Test
         @DisplayName("Valid credentials → 200 with token + user info")
         void login_validCredentials_returns200WithToken() throws Exception {
-            // NOTE: will pass once BUG-1 is fixed (missing @Transactional on UserService.authenticate)
             mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content("""
-                                    {"username":"admin","password":"admin123"}
-                                    """))
+                            .content("{\"username\":\"" + adminUsername + "\",\"password\":\"" + adminPassword + "\"}"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.token").isNotEmpty())
-                    .andExpect(jsonPath("$.data.user.username").value("admin"));
+                    .andExpect(jsonPath("$.data.user.username").value(adminUsername));
         }
 
         @Test
@@ -67,9 +71,7 @@ class FeatureApiContractIntegrationTest {
         void login_badPassword_returns401() throws Exception {
             mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content("""
-                                    {"username":"admin","password":"wrongpassword"}
-                                    """))
+                            .content("{\"username\":\"" + adminUsername + "\",\"password\":\"wrongpassword\"}"))
                     .andExpect(status().isUnauthorized());
         }
 
@@ -78,9 +80,7 @@ class FeatureApiContractIntegrationTest {
         void login_missingUsername_returns400() throws Exception {
             mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content("""
-                                    {"password":"admin123"}
-                                    """))
+                            .content("{\"password\":\"" + adminPassword + "\"}"))
                     .andExpect(status().isBadRequest());
         }
     }

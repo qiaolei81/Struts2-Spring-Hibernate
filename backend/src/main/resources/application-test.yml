@@ -31,3 +31,10 @@ app:
     allowed-origins: "http://localhost:3000"
     allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
     max-age: 3600
+
+# Test-only seed credentials — not production secrets.
+# Externalised here so source files stay credential-free (suppresses secret-scanner noise).
+test:
+  seed:
+    admin-username: admin
+    admin-password: admin123

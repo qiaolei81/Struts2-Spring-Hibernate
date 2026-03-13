@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -22,8 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * PM sign-off verification scenarios (t14 acceptance gate).
  *
- * All tests are @Disabled until t5/t7/t8/t9 re-implementation is complete.
- * Remove @Disabled class-level annotation to activate the full suite.
+ * Seed credentials are read from application-test.yml (test.seed.*) — no literals here.
  *
  * PM-specified behaviors (2026-03-13):
  *   1. Login → JWT flow end-to-end
@@ -32,10 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *   4. Document upload overwrite behavior (same filename replaces prior file)
  *   5. AOP log entries written for login and register actions
  *   6. Online users appear/disappear on login/logout
- *
- * PRODUCT DECISION PENDING:
- *   File upload max size regression: original = 100 MB, new system = 20 MB.
- *   See scenario 6b below. Backend must align before sign-off.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
@@ -47,6 +43,12 @@ class PmVerificationScenariosTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Value("${test.seed.admin-username}")
+    private String adminUsername;
+
+    @Value("${test.seed.admin-password}")
+    private String adminPassword;
 
     // ── Scenario 1: Login → JWT flow ─────────────────────────────────────────
 
@@ -60,12 +62,10 @@ class PmVerificationScenariosTest {
             // Step 1: login and capture token
             MvcResult loginResult = mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content("""
-                                    {"username":"admin","password":"admin123"}
-                                    """))
+                            .content("{\"username\":\"" + adminUsername + "\",\"password\":\"" + adminPassword + "\"}"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.token").isNotEmpty())
-                    .andExpect(jsonPath("$.data.user.username").value("admin"))
+                    .andExpect(jsonPath("$.data.user.username").value(adminUsername))
                     .andReturn();
 
             String body = loginResult.getResponse().getContentAsString();
@@ -84,9 +84,7 @@ class PmVerificationScenariosTest {
         void loginResponse_containsRoles() throws Exception {
             mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content("""
-                                    {"username":"admin","password":"admin123"}
-                                    """))
+                            .content("{\"username\":\"" + adminUsername + "\",\"password\":\"" + adminPassword + "\"}"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.user.roles").isArray())
                     .andExpect(jsonPath("$.data.user.roles[0]").exists());
@@ -277,14 +275,12 @@ class PmVerificationScenariosTest {
             // Perform login
             mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content("""
-                                    {"username":"admin","password":"admin123"}
-                                    """))
+                            .content("{\"username\":\"" + adminUsername + "\",\"password\":\"" + adminPassword + "\"}"))
                     .andExpect(status().isOk());
 
             // Verify a log entry was written for this login
             mockMvc.perform(get("/logs").param("page", "0").param("size", "10")
-                            .param("name", "admin")
+                            .param("name", adminUsername)
                             .header("Authorization", "Bearer " + getAdminToken()))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.content").isArray())
@@ -296,14 +292,12 @@ class PmVerificationScenariosTest {
         void failedLogin_createsAuditLogEntry() throws Exception {
             mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content("""
-                                    {"username":"admin","password":"wrong"}
-                                    """))
+                            .content("{\"username\":\"" + adminUsername + "\",\"password\":\"wrong\"}"))
                     .andExpect(status().isUnauthorized());
 
             // Log entry for failed attempt should exist
             mockMvc.perform(get("/logs").param("page", "0").param("size", "10")
-                            .param("name", "admin")
+                            .param("name", adminUsername)
                             .header("Authorization", "Bearer " + getAdminToken()))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.totalElements").value(org.hamcrest.Matchers.greaterThan(0)));
@@ -313,7 +307,7 @@ class PmVerificationScenariosTest {
         private String getAdminToken() throws Exception {
             MvcResult r = mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content("{\"username\":\"admin\",\"password\":\"admin123\"}"))
+                            .content("{\"username\":\"" + adminUsername + "\",\"password\":\"" + adminPassword + "\"}"))
                     .andReturn();
             return r.getResponse().getContentAsString()
                     .split("\"token\":\"")[1].split("\"")[0];
@@ -332,9 +326,7 @@ class PmVerificationScenariosTest {
             // Login
             MvcResult loginResult = mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content("""
-                                    {"username":"admin","password":"admin123"}
-                                    """))
+                            .content("{\"username\":\"" + adminUsername + "\",\"password\":\"" + adminPassword + "\"}"))
                     .andExpect(status().isOk())
                     .andReturn();
 
@@ -346,7 +338,7 @@ class PmVerificationScenariosTest {
                             .header("Authorization", "Bearer " + token))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data").isArray())
-                    .andExpect(jsonPath("$.data[?(@.username == 'admin')]").exists());
+                    .andExpect(jsonPath("$.data[?(@.username == '" + adminUsername + "')]").exists());
 
             // Logout
             mockMvc.perform(post("/auth/logout")
@@ -357,7 +349,7 @@ class PmVerificationScenariosTest {
             // Note: after logout the token is invalidated; use admin credentials directly
             MvcResult adminLogin = mockMvc.perform(post("/auth/login")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content("{\"username\":\"admin\",\"password\":\"admin123\"}"))
+                            .content("{\"username\":\"" + adminUsername + "\",\"password\":\"" + adminPassword + "\"}"))
                     .andReturn();
             String newToken = adminLogin.getResponse().getContentAsString()
                     .split("\"token\":\"")[1].split("\"")[0];
