@@ -2,8 +2,8 @@
 
 ## Current Tasks
 
-- 🔄 `t34` **Commit all untracked production deployment artifacts and uncommitted test improvements to git** (devops) - in_progress
-- ⏳ `t35` **Final delivery sign-off: confirm all artifacts committed, repo is clean, and rewrite is fully delivered with no remaining gaps** (pm) - pending
+- 🔄 `t36` **Push all local commits to remote and tag the release** (devops) - in_progress
+- ⏳ `t37` **Confirm remote is current and close out rewrite delivery** (pm) - pending
 
 ## Completed Tasks
 
@@ -40,3 +40,5 @@
 - ✅ `t31` **Production deployment: write Docker Compose, Dockerfile for backend and frontend, Nginx reverse proxy config, and environment variable documentation** (devops)
 - ✅ `t32` **Final production readiness review: validate Docker Compose stack builds and starts end-to-end, confirm all services healthy** (devops)
 - ✅ `t33` **Final acceptance sign-off: confirm production deployment artifacts complete, rewrite is fully delivered with no remaining defects** (pm)
+- ✅ `t34` **Commit all untracked production deployment artifacts and uncommitted test improvements to git** (devops)
+- ✅ `t35` **Final delivery sign-off: confirm all artifacts committed, repo is clean, and rewrite is fully delivered with no remaining gaps** (pm)
